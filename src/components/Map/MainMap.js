@@ -10,6 +10,7 @@ import MapGL, {
 } from 'react-map-gl';
 import Pins from './Pins';
 import mapboxgl from "mapbox-gl"; 
+import { REACT_APP_PUBLIC_MAPBOX_ACCESS_TOKEN } from '../../config/tokens';
 
 mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
@@ -153,7 +154,7 @@ class MainMap extends Component {
                 style={{display:!this.props.active ? 'flex' : 'none'}}
                 mapStyle="mapbox://styles/weedzly/ckjt2uh4q569819pjjbxz6tvd"
                 onViewportChange={(e) => this.props._updateViewport({...e, updateMap: true})}
-                mapboxApiAccessToken={process.env.REACT_APP_PUBLIC_MAPBOX_ACCESS_TOKEN}
+                mapboxApiAccessToken={REACT_APP_PUBLIC_MAPBOX_ACCESS_TOKEN}
             >
            
                 {

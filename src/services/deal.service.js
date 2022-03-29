@@ -1,5 +1,6 @@
+import { REACT_APP_PUBLIC_API_URL } from '../config/tokens';
 import { fetchWrapper } from '../helpers/fetch-wrapper';
-const api = process.env.REACT_APP_PUBLIC_API_URL
+const api = REACT_APP_PUBLIC_API_URL
 const baseUrl = `${api}${'deals'}`;
 
 export const dealService = {

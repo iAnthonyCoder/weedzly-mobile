@@ -21,12 +21,13 @@ import sorting_settings from '../../config/sorting_settings'
 import Tabs from '../../components/Tabs/Tabs'
 import FullSpinner from '../../components/Common/FullSpinner'
 import mapboxgl from 'mapbox-gl';
+import { REACT_APP_PUBLIC_MAPBOX_ACCESS_TOKEN } from '../../config/tokens'
 
 
 
 const Map = () => {
 
-    mapboxgl.accessToken = process.env.REACT_APP_PUBLIC_MAPBOX_ACCESS_TOKEN;
+    mapboxgl.accessToken = REACT_APP_PUBLIC_MAPBOX_ACCESS_TOKEN;
     mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
     const mapContainer = useRef(null);
 

@@ -12,6 +12,7 @@ import { easeCubic } from 'd3-ease';
 import moment from 'moment';
 import { mapboxService } from '../../services/mapbox.service';
 import { MY_LOCATION } from '../../helpers/constants';
+import { REACT_APP_PUBLIC_MAPBOX_ACCESS_TOKEN } from '../../config/tokens';
 
 
 const RouteMap = (props) => {
@@ -114,7 +115,7 @@ const RouteMap = (props) => {
                 height='100%'
                 mapStyle="mapbox://styles/weedzly/ckjt2uh4q569819pjjbxz6tvd"
                 onViewportChange={_updateViewport}
-                mapboxApiAccessToken={process.env.REACT_APP_PUBLIC_MAPBOX_ACCESS_TOKEN}
+                mapboxApiAccessToken={REACT_APP_PUBLIC_MAPBOX_ACCESS_TOKEN}
                 onClick={getClickPosition}
             >
                 <>
