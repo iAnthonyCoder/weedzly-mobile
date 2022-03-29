@@ -1,0 +1,27 @@
+.dot-yellow{
+    background-color: #f1c40f;
+}
+
+.dot-blue{
+    background-color: #2980b9;
+}
+
+.dot-red{
+    background-color:#e74c3c;
+}
+
+.dot-green{
+    background-color: #27ae60;
+}
+
+.dot-purple{
+    background-color: #8e44ad;
+}
+
+.dot{
+    height:12px;
+    width:12px;
+    border-radius:100%;
+    margin-right:4px;
+    margin-top:2px;
+}

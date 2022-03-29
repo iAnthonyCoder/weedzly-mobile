@@ -1,0 +1,17 @@
+.glossary-content p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    
+    -webkit-box-orient: vertical;
+}
+.glossary-content.hide-text :not(:first-child) {
+    display: none;
+}
+
+.glossary-content.hide-text p {
+    -webkit-line-clamp: 3; 
+}
+.glossary-content :not(:first-child) {
+    display: flex;
+}

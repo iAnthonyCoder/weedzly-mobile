@@ -1,0 +1,15 @@
+.content{
+    line-height: 24px;
+}
+
+.content > h2 {
+    margin-top: 32px;
+}
+
+.content > h3 {
+    margin-top: 24px;
+}
+
+.content > h4 {
+    margin-top: 24px;
+}

@@ -1,0 +1,7 @@
+{
+  "name": "weedzly",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

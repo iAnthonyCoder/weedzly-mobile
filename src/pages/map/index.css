@@ -1,0 +1,62 @@
+.slider-wrapper{
+    height: 190px;
+    overflow-y: hidden;
+    bottom: 0;
+    position: absolute;
+    --background: none !important;
+    
+}
+
+.slider-wrapper.bottom{
+    bottom: -110px;
+    /* transform: translateY(110px) !important; */
+}
+
+.slider-wrapper.top{
+    bottom: 50px;
+    /* transform: translateY(0px) !important; */
+}
+
+.gestureCatcher{
+    transition: all 0.5s ease-in-out;
+}
+
+.retailer-card-map{
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1rem;
+}
+
+.retailer-card-map h5{
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; 
+    -webkit-box-orient: vertical;
+}
+.mapboxgl-ctrl{
+    z-index: 2 !important;
+    display: none;
+}
+.slider-wrapper{
+    z-index: 200 !important;
+}
+
+.front{
+    z-index: 5 !important;
+}
+
+.pointer-events-none{
+    pointer-events: none;
+}
+
+.pointer-events-all{
+    pointer-events: all;
+}
+
+
+.mapboxgl-marker {
+    width: 1px;
+    height: 1px;
+}

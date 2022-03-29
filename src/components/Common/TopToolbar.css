@@ -1,0 +1,35 @@
+span.small{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    background-color: #6c3478;
+    border-radius: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 0;
+    transform: translateX(20%);
+    font-size: 12px;
+    font-weight: 700;
+    transition: all 0.1s ease;
+    z-index: 1;
+}
+
+span.big{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    background-color: #6c3478;
+    border-radius: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 0;
+    transform: translateX(20%) scale(1.8);
+    transition: all 0.1s ease;
+    font-size: 12px;
+    font-weight: 700;
+    z-index: 1;
+}

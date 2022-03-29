@@ -1,0 +1,24 @@
+.business-main-info{
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.big-logo{
+    border-radius: 100%;
+    height: 36px;
+}
+h6{
+    font-size: .85rem;
+}
+.no-p{
+    --inner-padding-start: 0px !important;
+    margin-left: -16px !important;
+}
+
+.sc-ion-popover-ios-h{
+    width: 300px !important;
+    --width: 300px !important;
+}

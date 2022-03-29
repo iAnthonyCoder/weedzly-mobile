@@ -1,0 +1,11 @@
+.menu-card{
+    margin-inline: 8px !important;
+}
+
+ion-card-header h6{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}

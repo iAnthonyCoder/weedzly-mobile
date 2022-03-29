@@ -1,0 +1,17 @@
+.swiper-slide {
+    width: 200px;
+}
+
+.swiper-container{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+h1 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.swiper-slide{
+    height: auto !important;
+}

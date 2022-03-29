@@ -1,0 +1,9 @@
+#phone{
+    width: 100% !important;
+    border: none !important;
+    background: none !important;
+}
+
+#phone:focus, #phone:focus{
+    outline: none;
+}

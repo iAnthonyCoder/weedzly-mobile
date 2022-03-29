@@ -1,0 +1,7 @@
+ion-content{
+    padding: 50px !important;
+}
+
+ion-item.error{
+    border:1px solid #eb445a
+}
