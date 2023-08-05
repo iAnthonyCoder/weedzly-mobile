@@ -6,7 +6,6 @@ import MapGL, {
     Marker,
     FlyToInterpolator
 } from 'react-map-gl';
-import cookie from 'js-cookie'
 import _ from 'lodash';
 import { easeCubic } from 'd3-ease';
 import moment from 'moment';

@@ -1,11 +1,36 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonContent, IonHeader, IonItem, IonLabel, IonModal, IonPage, IonTitle, IonToast, IonToolbar } from '@ionic/react'
-import React, { useState } from 'react'
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonContent, IonHeader, IonItem, IonLabel, IonModal, IonPage, IonTitle, IonToast, IonToolbar, useIonModal } from '@ionic/react'
+import React, { useState, useEffect } from 'react'
 import TopToolbar from '../Common/TopToolbar'
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { receiptService } from '../../services/receipt.service';
 
 const ReceiptModal = (props) => {
 
+    const handleDismiss = () => {
+        dismiss()
+        setTimeout(() => {
+            props.setShowModal(false)
+        }, 500)
+    }
+
+    const [present, dismiss] = useIonModal(Modal, {
+        ...props,
+        setShowToast: props.setShowToast,
+        onDismiss: handleDismiss
+    });
+
+    useEffect(() => {
+        props.showModal && present();
+    }, [props.showModal])
+    
+    return false
+}
+    
+export default ReceiptModal
+
+const Modal = (props) => {
+
+    
     const [ actionsLoading, setActionsLoading ] = useState(false)
     const [ receiptUrl, setReceiptUrl ] = useState('')
     
@@ -65,7 +90,7 @@ const ReceiptModal = (props) => {
                 type:'success',
                 message:'Receipt sent!'
             })
-            props.setShowModal(false)
+            props.onDismiss()
             setActionsLoading(false)
         } catch (err) {
             console.log(err)
@@ -73,14 +98,13 @@ const ReceiptModal = (props) => {
     }
 
     return (
-        <IonModal isOpen={props.showModal} swipeToClose={true}>
             <IonPage>
                 <IonHeader>
                     <IonToolbar>
                         <IonTitle>Upload Receipt</IonTitle>
                         <IonButtons slot="end">
                             <IonButton fill='clear'>
-				        		<IonButton onClick={()=>props.setShowModal(false)}>Close</IonButton>
+				        		<IonButton onClick={()=>props.onDismiss()}>Close</IonButton>
 				            </IonButton>
                         </IonButtons>
                     </IonToolbar>
@@ -111,8 +135,5 @@ const ReceiptModal = (props) => {
                 </IonContent>
             </IonPage>
             
-        </IonModal>
     )
 }
-
-export default ReceiptModal

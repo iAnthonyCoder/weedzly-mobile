@@ -150,11 +150,19 @@ const Checkout = () => {
     });
 
 
-    const totalQuantity = () => {
+    const totalQuantity = (reward) => {
+        console.log(products)
         var total = 0
-        products.map(product => {
-            total += parseInt(product.quantity, 10);
-        })
+        if(reward){
+            products.filter(x => x.reward).map(product => {
+                total += parseInt(product.quantity, 10);
+            })
+        } else {
+            products.filter(x => !x.reward).map(product => {
+                total += parseInt(product.quantity, 10);
+            })
+        }
+        
         return total
     }
 
@@ -234,13 +242,13 @@ const Checkout = () => {
                         <div style={{backgroundColor:'white', border:'1px solid #cccccc', padding:'10px'}}>
 
                             <div style={{display:'flex', justifyContent:'space-between'}}>
-                                <span>items({totalQuantity()}): </span>
+                                <span>Products ({totalQuantity()}): </span>
                                 <span>${(medicalSubtotal + recreationalSubtotal).toFixed(2)}</span>
                             </div>
 
                             {
                                 nugsSubtotal > 0 && <div style={{display:'flex', justifyContent:'space-between', marginTop:'8px'}}>
-                                     <span>items({totalQuantity()}): </span>
+                                     <span>Products ({totalQuantity(true)}): </span>
                                      <span>{nugsSubtotal} Nugs</span>
                                 </div>
                             }
@@ -255,20 +263,14 @@ const Checkout = () => {
                                                 x.areMedicalProductsExempt ? <span>${(recreationalSubtotal * (x.value*0.01)).toFixed(2)}</span> : x.onlyForMedicalProducts ? <span>${(medicalSubtotal * (x.value*0.01)).toFixed(2)}</span> : <span>${((medicalSubtotal + recreationalSubtotal) * (x.value*0.01)).toFixed(2)}</span>
                                             }
                                         </span>
-                                        {
-                                            nugsSubtotal > 0 && <span className="shipping-price">
-                                                -
-                                            </span>
-                                        }
+                                       
                                     </div>)
                                 ) : (
                                     <div style={{display:'flex', justifyContent:'space-between', marginTop:'8px'}}>
                                     
                                             <span>Tax:</span>
 
-                                        <span>
-                                                -
-                                        </span>
+                                     
                                         {
                                             nugsSubtotal > 0 && <span>
                                                 -
@@ -295,9 +297,15 @@ const Checkout = () => {
                             }
 
                             <div style={{display:'flex', justifyContent:'space-between', marginTop:'12px'}}>
-                                <span style={{fontSize:'20px', fontWeight:'700'}}>Order Total: </span>
+                                <span style={{fontSize:'20px', fontWeight:'700'}}>Order Total (USD): </span>
                                 <span style={{fontSize:'20px', fontWeight:'700'}}>${total}</span>
                             </div>
+                            {
+                                nugsSubtotal > 0 && <div style={{display:'flex', justifyContent:'space-between', marginTop:'12px'}}>
+                                    <span style={{fontSize:'20px', fontWeight:'700'}}>Order Total (NUGS): </span>
+                                    <span style={{fontSize:'20px', fontWeight:'700'}}>{nugsSubtotal}</span>
+                                </div>
+                            }
                         </div>
                     </section>
                     <section>

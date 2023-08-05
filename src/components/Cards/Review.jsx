@@ -84,7 +84,7 @@ const ReviewCard = (props) => {
                 <IonItem>
                  
                     <IonAvatar slot='start'>
-                        <img src={props.picture ? props.picture : props.item.user.picture}  />
+                        <img src={props.picture ? props.picture : props.item.user.picture ? props.item.user.picture : '/assets/images/user.png'}  />
                     </IonAvatar>
                     <ion-label>
                         <h2>{props.name ? props.name : props.item.author}</h2>

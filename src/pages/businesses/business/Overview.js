@@ -153,7 +153,7 @@ const BusinessProfile = (props) => {
                     selectedSegment === 'overview' ? (
                         <IonContent fullscreen overflow-scroll='false' scrollEvents={true} onIonScroll={(e)=>setScrollPos(e.detail.scrollTop)}>
                             <IonCard  style={{margin:'0', borderRadius:'0'}} > 
-                                <IonItem lines="full" style={{display:'flex', alignItems:'center'}}>
+                                <section lines="full" style={{display:'flex', alignItems:'center'}}>
                                     <div style={{padding: '20px 0', display:'flex', alignItems:'center'}}>
                                         <img src={entity.logo} width='17.5%' style={{borderRadius:'100%'}}></img>
                                         <div style={{display:'flex',flexDirection:'column'}}>
@@ -171,18 +171,18 @@ const BusinessProfile = (props) => {
                                             </small>
                                         </div>
                                     </div>
-                                </IonItem>
-                                <IonItem className='no-p' style={{margin:0, padding:0}}>
+                                </section>
+                                <section style={{borderTop:'1px solid #cccccc'}}>
                                 <IonGrid style={{width:'100%'}}>
                                     <IonRow>
-                                        <IonCol >
-                                            <IonItem lines='none' style={{height:'28px', display:'flex'}}>
+                                        <IonCol style={{paddingRight:'0px', paddingLeft:'0px'}} size="6">
+                                            <div lines='none' style={{height:'28px', display:'flex', alignItems:'center'}}>
                                                 <IonIcon style={{fontSize:'18px', marginRight:'12px'}} icon={entity.type === 'DISPENSARY' ? storefrontOutline : carOutline} />
                                                 <IonLabel style={{textTransform:'capitalize', fontSize:'11px', margin:'0'}}>{entity.type.toLowerCase()}</IonLabel>
-                                            </IonItem>
+                                            </div>
                                         </IonCol>
-                                        <IonCol>
-                                            <IonItem lines='none' style={{height:'28px', display:'flex'}}>
+                                        <IonCol style={{paddingRight:'0px', paddingLeft:'0px'}} size="6">
+                                            <div lines='none' style={{height:'28px', display:'flex', alignItems:'center'}}>
                                                 <IonIcon style={{fontSize:'18px', marginRight:'12px'}} icon={documentOutline} />
                                                 <IonLabel style={{textTransform:'capitalize', fontSize:'11px', margin:'0'}}>
                                                     {
@@ -195,20 +195,20 @@ const BusinessProfile = (props) => {
 			            		    	        	    : ''
 			            		    	        	}
                                                 </IonLabel>
-                                            </IonItem>
+                                            </div>
                                         </IonCol>
                                     </IonRow>
                                     <IonRow>
-                                        <IonCol>
-                                            <IonItem lines='none' style={{height:'28px', display:'flex'}}>
+                                        <IonCol style={{paddingRight:'0px', paddingLeft:'0px'}} size="6">
+                                            <div lines='none' style={{height:'28px', display:'flex', alignItems:'center'}}>
                                                 <IonIcon style={{fontSize:'18px', marginRight:'12px'}} icon={starOutline} />
                                                 <IonLabel style={{textTransform:'capitalize', fontSize:'11px', margin:'0'}}>
-                                                    {entity.reviewsAmt} Reviews
+                                                    {entity.reviewsAmt ? entity.reviewsAmt : '0'} Reviews
                                                 </IonLabel>
-                                            </IonItem>
+                                            </div>
                                         </IonCol>
-                                        <IonCol>
-                                            <IonItem lines='none' style={{height:'28px', display:'flex'}}>
+                                        <IonCol style={{paddingRight:'0px', paddingLeft:'0px'}} size="6">
+                                            <div lines='none' style={{height:'28px', display:'flex', alignItems:'center'}}>
                                                 <IonIcon style={{fontSize:'18px', marginRight:'12px'}} icon={locationOutline} />
                                                 <IonLabel style={{textTransform:'capitalize', fontSize:'11px', margin:'0'}}>
                                                     {
@@ -221,16 +221,16 @@ const BusinessProfile = (props) => {
                                                     }
                                                     {entity.type!='DELIVERY' ? ' - ' : ' '}{entity.city.name}, {entity.city.state.abbreviation}
                                                 </IonLabel>
-                                            </IonItem>
+                                            </div>
                                         </IonCol>
                                     </IonRow>
                                     <IonRow>
-                                        <IonCol>
-                                            <IonItem onClick={(e) =>
+                                        <IonCol style={{paddingRight:'0px', paddingLeft:'0px'}}>
+                                            <div onClick={(e) =>
                                                   present({
                                                     event: e.nativeEvent,
                                                   })
-                                                } lines='none' style={{height:'28px', display:'flex'}}>
+                                                } lines='none' style={{height:'28px', display:'flex', alignItems:'center'}}>
                                                 <IonIcon style={{fontSize:'18px', marginRight:'12px'}} icon={timerOutline} />
                                                 {
                                                     open.isOpen ? (
@@ -264,7 +264,7 @@ const BusinessProfile = (props) => {
                                                     )
                                                 }
                                                 <IonIcon width icon={arrowDownCircle} style={{fontSize:'16px', marginLeft:'12px'}}  />
-                                            </IonItem>
+                                            </div>
                                             
                                         </IonCol>
                                         <IonCol />
@@ -329,7 +329,7 @@ const BusinessProfile = (props) => {
                                             </IonItem>
                                         }
                                     </IonList> */}
-                                </IonItem>
+                                </section>
                             </IonCard>
                             {/* {
 

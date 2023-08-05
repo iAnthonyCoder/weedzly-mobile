@@ -1,7 +1,5 @@
 import { IonSlide, IonSlides, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonText, IonButton, useIonRouter, IonSkeletonText } from '@ionic/react';
-import cookie from 'js-cookie';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
 import { MY_LOCATION } from '../../helpers/constants';
 import './Page.css';
 

@@ -14,7 +14,7 @@ const Tabs = (props) => {
 			    	</IonTabButton>
 			    	<IonTabButton tab="Dispensaries" href={'/businesses'}>
 			    		<IonIcon icon={storefront} />
-			    		<IonLabel>Dispensaries</IonLabel>
+			    		<IonLabel>Stores</IonLabel>
         
 			    	</IonTabButton>
 			    	<IonTabButton tab="Deals" href={'/deals'}>

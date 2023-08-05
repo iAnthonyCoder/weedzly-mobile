@@ -140,6 +140,7 @@ const Cart = () => {
                         {
                             products.length > 0 ? (
                                 <IonContent color='light'>
+                                    {console.log(products)}
                                     <IonList>
                                         {
                                             products.map((x, i) => <IonItem lines={products.length -1 === i ? 'none' : 'inset'} style={{alignItems: 'flex-start'}} key={i}>

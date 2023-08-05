@@ -7,7 +7,6 @@ import { static_img_url_creator } from '../../helpers/static_img_url_creator';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { useDebounce } from 'use-debounce'
 import queryString from 'query-string'
-import cookie from 'js-cookie';
 import { mapboxService } from '../../services/mapbox.service';
 import * as turf from "@turf/turf";
 import _ from 'lodash'
@@ -31,8 +30,10 @@ export const MenuModal = (props) => {
 		router.push(path)
     }
 
-    const logout = () => {
-        
+    const logout = async () => {
+        await accountService.updateOwn({
+            mobileNotificationId: token.value
+        })
         localStorage.removeItem('user')
         props.setShowModal(false)
         window.location.reload();

@@ -23,16 +23,16 @@ const ArticleCard = ({
                 }}  
             />
             <IonCardHeader>
-                <IonCardSubtitle className='subtitle'>
+                <IonCardSubtitle className='subtitle' style={{flexWrap: 'wrap'}}>
                     <IonBadge color="primary">{item.category.name}</IonBadge>
                     <IonText style={{fontSize:'12px'}}>{`${item.timeread} MIN READ`}</IonText>
                 </IonCardSubtitle>
-                <IonCardTitle className='title'>
+                <IonCardTitle className='title ellipsed-text' style={{textAlign:'left'}}>
                     {item.name}
                 </IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
-                <IonText className='description'>
+                <IonText className='description' style={{textAlign:'left'}}>
                     {item.metadata}
                 </IonText>
             </IonCardContent>

@@ -22,7 +22,9 @@ import {
     FETCHED_CART,
     SET_SITEWIDE_DEAL,
     GET_NOTIFICATIONS,
-    UPDATE_NOTIFICATION
+    UPDATE_NOTIFICATION,
+    CHANGE_MUST_NAVIGATE_TO,
+    ADD_EMBEEDED_NOTIFICATION
 } from './actions_constants'
 
 //CHECK_USER_LOGIN
@@ -197,3 +199,18 @@ export const resetCart = () => {
         type: RESET_CART
     }
 }
+
+export const changeMustNavigateTo = (url) => {
+    return {
+        type: CHANGE_MUST_NAVIGATE_TO,
+        url:url
+    }
+}
+
+export const addEmbeededNotification = (notification) => {
+    return {
+        type: ADD_EMBEEDED_NOTIFICATION,
+        notification:notification
+    }
+}
+

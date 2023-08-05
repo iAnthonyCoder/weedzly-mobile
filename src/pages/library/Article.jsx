@@ -5,7 +5,9 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import TopToolbar from '../../components/Common/TopToolbar'
 import { articleService } from '../../services/article.service'
-import { SocialSharing } from '@ionic-native/social-sharing';
+import { Share } from '@capacitor/share';
+
+
 import './Article.css'
 
 const Article = (props) => {
@@ -29,25 +31,17 @@ const Article = (props) => {
 
     }
 
-    const shareFacebook = () => {
-        SocialSharing.shareViaFacebook('', '', `https://weedzly.com/library/${data.article.category.slug}/${data.article.slug}`).then(() => {
+    const _share = () => {
+        Share.share({
+            title: data.title,
+            text: data.metadata,
+            url: `https://weedzly.com/library/${data.article.category.slug}/${data.article.slug}`,
+            dialogTitle: 'Share now',
         })
+      
     }
 
-    const shareTwitter = () => {
-        SocialSharing.shareViaTwitter('', '', `https://weedzly.com/library/${data.article.category.slug}/${data.article.slug}`).then(() => {
-        })
-    }
 
-    const shareInstagram = () => {
-        SocialSharing.shareViaInstagram('', '', `https://weedzly.com/library/${data.article.category.slug}/${data.article.slug}`).then(() => {
-        })
-    }
-
-    const shareWhatsapp = () => {
-        SocialSharing.shareViaWhatsApp('', '', `https://weedzly.com/library/${data.article.category.slug}/${data.article.slug}`).then(() => {
-        })
-    }
 
     useEffect(() => {
         getData()
@@ -103,23 +97,10 @@ const Article = (props) => {
                                 <br />
                             </section>
                             <IonFab horizontal="end" vertical="bottom" slot="fixed">
-                                <IonFabButton color="primary">
+                                <IonFabButton onClick={()=>_share()} color="primary">
                                     <IonIcon icon={shareSocial}></IonIcon>
                                 </IonFabButton>
-                                <IonFabList side="top">
-                                    <IonFabButton onClick={()=>shareFacebook()}  color="light">
-                                        <IonIcon icon={logoFacebook}></IonIcon>
-                                    </IonFabButton>
-                                    <IonFabButton onClick={()=>shareTwitter()} color="light">
-                                        <IonIcon icon={logoTwitter}></IonIcon>
-                                    </IonFabButton>
-                                    <IonFabButton onClick={()=>shareInstagram()} color="light">
-                                        <IonIcon icon={logoInstagram}></IonIcon>
-                                    </IonFabButton>
-                                    <IonFabButton onClick={()=>shareWhatsapp()} color="light">
-                                        <IonIcon icon={logoWhatsapp}></IonIcon>
-                                    </IonFabButton>
-                                </IonFabList>
+                                
                             </IonFab>
                         </>
                     )

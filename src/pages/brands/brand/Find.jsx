@@ -2,7 +2,6 @@ import { IonBadge, IonItem, IonLabel, IonList, IonSpinner, IonText } from '@ioni
 import React, { useState, useEffect } from 'react'
 import { calcDistance } from '../../../helpers/calcDistance'
 import { brandService } from '../../../services/brand.service'
-import cookie from 'js-cookie'
 import CheckIfOpen from '../../../helpers/checkIfOpen'
 
 const FindBrandRetailers = (props) => {

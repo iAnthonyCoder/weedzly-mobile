@@ -1,16 +1,19 @@
-import { IonButton, IonCheckbox, IonContent, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonRouterLink, IonSpinner, IonText, IonToast } from '@ionic/react'
+import { IonButton, IonCheckbox, IonContent, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonPage, IonRouterLink, IonSpinner, IonText, IonToast, useIonRouter } from '@ionic/react'
 import React, { useState, useEffect } from 'react'
 import { Formik, Field, Form, ErrorMessage, useFormik } from 'formik';
 import * as Yup from 'yup';
 import './Signup.css'
 import { checkmarkDoneCircle } from 'ionicons/icons';
 import { accountService } from '../../services';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../store/actions';
+import { Router } from 'workbox-routing';
 
 const Signup = () => {
 
-    const dispatch = useDispatch()
+    const { user } = useSelector(state => state)
+
+    const router = useIonRouter()
 
     const validationSchema = Yup.object().shape({
         nickname: Yup.string().max(20,'Max length is 20')
@@ -137,6 +140,13 @@ const Signup = () => {
     useEffect(() => {
         checkExists(formik.values.nickname)
     }, [formik.values.nickname])
+
+    useEffect(() => {
+        console.log(user);
+        if(user && user._id){
+            router.push('/')
+        }
+    }, [user])
 
     return (
         <IonPage>

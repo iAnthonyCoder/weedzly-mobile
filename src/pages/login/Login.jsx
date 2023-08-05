@@ -16,6 +16,13 @@ const Login = () => {
 
     const { user } = useSelector(state => state)
 
+    useEffect(() => {
+        console.log(user);
+        if(user && user._id){
+            router.push('/')
+        }
+    }, [user])
+
     const validationSchema = Yup.object().shape({
         email: Yup.string()
             .email('Email is invalid')
@@ -60,7 +67,7 @@ const Login = () => {
                             } else {
                                 setLogged(true)
                                 await dispatch(userLogin({...userData, token:response.response}))
-                                window.location.replace('/login?ref=');
+                                window.location.reload()
                             }
                         })
                 } else {
@@ -94,21 +101,21 @@ const Login = () => {
     }
 
     
-    useEffect(() => {
-        if(user._id){
+    // useEffect(() => {
+    //     if(user._id){
             
-            present({
-                cssClass: 'my-css',
-                header:'User logged',
-                message:'Redirecting in 3 seconds...'
+    //         present({
+    //             cssClass: 'my-css',
+    //             header:'User logged',
+    //             message:'Redirecting in 3 seconds...'
 
-            })
-            setTimeout(() => {
+    //         })
+    //         setTimeout(() => {
                 
-                // router.push(window.location.search.replace('?ref=', ''))
-            }, 3000);
-        }
-    }, [user])
+    //             // router.push(window.location.search.replace('?ref=', ''))
+    //         }, 3000);
+    //     }
+    // }, [user])
     
 
 

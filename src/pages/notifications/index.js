@@ -8,6 +8,7 @@ import { notificationService } from '../../services/notification.service'
 import { getNotifications } from '../../store/actions'
 import { ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
 import './Notifications.css'
+import ImageUrlFormatter from '../../helpers/ImageUrlFormatter'
 
 const Notifications = () => {
 
@@ -50,7 +51,7 @@ const Notifications = () => {
 
             
             
-            let _notifications = await notificationService.get('?size=10&from='+notifications.totalData.length)
+            let _notifications = await notificationService.get('?sortField=createdAt&sortOrder=desc&size=10&from='+notifications.totalData.length)
             
             const notificationsList = notifications.totalData && notifications.totalData.length > 0 ? notifications.totalData.concat(_notifications.totalData) : _notifications.totalData
 
@@ -190,6 +191,50 @@ const NotificationItem = (props) => {
 
     const [ state, setState ] = useState({})
 
+    const _text = (status, orderNumber, mode) => {
+        let body = ''
+        switch (status) {
+            case "ACCEPTED":
+    
+                if(mode === 'PICKUP'){
+                    body = `Your Weedzly order #${orderNumber} for pickup has been accepted.`
+                }
+    
+                if(mode === 'CURBSIDE_PICKUP'){
+                    body = `Your Weedzly order #${orderNumber} for curbside pickup has been accepted.`
+                }
+    
+                if(mode === 'DELIVERY'){
+                    body = `Your Weedzly order #${orderNumber} has been accepted.`
+                }
+    
+                break;
+    
+            case "REJECTED":
+                body = `Your Weedzly order #${orderNumber} has been rejected.`
+                break;
+         
+            case "READY":
+                if(mode === 'PICKUP'){
+                    body = `Your Weedzly order #${orderNumber} is ready for pickup.`
+                } 
+                if(mode === 'CURBSIDE_PICKUP'){
+                    body = `Your weedzly order #${orderNumber} is ready for curbside pickup.`
+                } 
+                if(mode === 'DELIVERY'){
+                    body = `Your Weedzly order #${orderNumber} is on the way.`
+                } 
+                break;
+            case "DISPATCHED":
+                body = `Your Weedzly delivery order #${orderNumber} is on the way.`
+                break;
+     
+            default:
+                break;
+        }
+        return body
+    }
+
     useEffect(() => {
         let data = {
             href: '',
@@ -203,12 +248,8 @@ const NotificationItem = (props) => {
         switch ( props.item.type.toLowerCase()) {
             
             case 'pointstransaction':
-                data.link = `/businesses/profile/${props.item.pointstransaction.dispensary.slug}`
-                data.picture = props.item.transmitter.type === 'ADMIN' 
-                    ? 'assets/images/logo.png'
-                    : props.item.transmitter.picture 
-                        ? props.item.transmitter.picture
-                        : 'assets/images/user.png'
+                data.link = `/businesses/profile/${props.item.pointstransaction.dispensary.slug}#rewards`
+                data.picture = 'assets/images/hoolding-leaf.svg'
                 data.text = ()=><>
                     {
                         props.item.transmitter.type === 'ADMIN' 
@@ -217,9 +258,16 @@ const NotificationItem = (props) => {
                     }
                     
                 </>
-                data.icon = '/static/icons/hoolding-leaf.svg'
+                data.icon = 'assets/images/hoolding-leaf.svg'
                 break;
         
+            case 'order':
+                data.link = `/profile/orders/${props.item.order._id}`
+                data.picture = 'assets/images/cart_purchase.svg'
+                data.text = ()=> _text(props.item.orderStatus, props.item.order.number, props.item.order.mode)
+                data.icon = 'assets/images/cart_purchase.svg'
+                break;
+
             default:
                 break;
         }

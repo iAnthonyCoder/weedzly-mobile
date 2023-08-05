@@ -6,18 +6,26 @@ import Review from '../Modals/ReviewModal'
 import queryString from 'query-string'
 import ReviewGraph from '../Common/ReviewGraph'
 import ReviewCard from '../Cards/Review'
-import cookie from 'js-cookie'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateModalStatus } from '../../store/actions'
 
 const Reviews = (props) => {
 
     const user = useSelector(state => state.user) 
 
+    const dispatch = useDispatch()
+
     const no_reviews = () => (<div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}} className='ion-margin-top ion-margin-bottom'>
         <img style={{width:'50%'}} src={'/assets/images/no_reviews.png'}></img>
         <h2 style={{marginTop:'0px'}}>No reviews found</h2>
         <IonText>There are no reviews available</IonText><br/>
-        <IonButton onClick={()=>setShowReviewModal(true)} >Write a review</IonButton>
+        <IonButton onClick={()=>{
+            (user._id) ? (
+                setShowReviewModal(true)
+            ) : ( 
+                dispatch(updateModalStatus({login:true}))
+            )
+        }} >Write a review</IonButton>
     </div>)
 
     const [ actionsLoading, setActionsLoading ] = useState(true)

@@ -104,10 +104,10 @@ const DealsCarousel = (props) => {
             </div>
             <IonSlides pager={true} options={slideOpts} style={{paddingLeft:'16px', paddingRight:'16px', paddingTop:'4px', paddingBottom:'4px'}}>
                 {
-                    initialCategories.map((item, i) => <IonSlide key={i} className={'ion-padding-bottom ion-padding-top'}>
-                            <IonCard className='ion-no-margin' style={{height:'100%', width:'100%'}}>
+                    initialCategories.map((item, i) => <IonSlide onClick={()=>router.push('/deals?'+item.query)} key={i} className={'ion-padding-bottom ion-padding-top'}>
+                            <IonCard className='ion-no-margin' style={{height:'100%', width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
                                 <img src={item.icon} style={{width:'40%', paddingTop:'48px', paddingBottom:'48px'}}></img>
-                                <div>
+                                <div style={{width:'100%'}}>
                                     <IonCardTitle  className='title ion-margin-bottom ion-padding-top' style={{borderTop:'1px solid #cccccc'}}>
                                         {item.label}
                                     </IonCardTitle>

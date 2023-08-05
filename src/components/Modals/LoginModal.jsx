@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import React, { useState, useEffect } from 'react'
 import './LoginModal.css'
 import { accountService } from '../../services/account.service';
-import { userLogin } from '../../store/actions';
+import { updateModalStatus, userLogin } from '../../store/actions';
 import { checkmarkDoneCircle, informationCircle } from 'ionicons/icons';
 import { isError } from 'lodash';
 
@@ -160,7 +160,12 @@ const LoginModal = (props) => {
                         ) : ''
                     } */}
                     </div>
-                    <IonRouterLink href='/signup'><center>Don't have an account? Sign up now!</center></IonRouterLink>
+                    <IonRouterLink 
+                        onClick={()=>{
+                            dispatch(updateModalStatus({login:false}))
+                            dispatch(updateModalStatus({signup:true}))
+                        }}
+                    ><center>Don't have an account? Sign up now!</center></IonRouterLink>
                 </form>
             </IonContent>
             <IonToast

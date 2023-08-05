@@ -1,4 +1,4 @@
-import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonContent, IonHeader, IonItem, IonLabel, IonList, IonModal, IonPage, IonRouterLink, IonSearchbar, IonTitle, IonToast, IonToolbar, useIonModal } from '@ionic/react'
+import { IonAvatar, IonButton, IonButtons, IonCard, IonCardContent, IonContent, IonHeader, IonItem, IonLabel, IonList, IonModal, IonPage, IonRouterLink, IonSearchbar, IonTitle, IonToast, IonToolbar, useIonModal, useIonRouter } from '@ionic/react'
 import React, { useState, useRef, useEffect } from 'react'
 import TopToolbar from '../Common/TopToolbar'
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
@@ -8,6 +8,32 @@ import _ from 'lodash';
 import FullSpinner from '../Common/FullSpinner';
 
 const ReceiptNoBusinessModal = (props) => {
+
+    const router = useIonRouter()
+
+    const handleDismiss = () => {
+        dismiss()
+        setTimeout(() => {
+            props.setShowModal(false)
+        }, 500)
+    }
+
+    const [present, dismiss] = useIonModal(Modal, {
+        ...props,
+        onDismiss: handleDismiss,
+        router:router
+    });
+
+    useEffect(() => {
+        props.showModal && present();
+    }, [props.showModal])
+    
+    return false
+}
+
+export default ReceiptNoBusinessModal
+
+const Modal = (props) => {
 
     const [ actionsLoading, setActionsLoading ] = useState(false)
     const [ receiptUrl, setReceiptUrl ] = useState('')
@@ -31,6 +57,7 @@ const ReceiptNoBusinessModal = (props) => {
     }
 
     useEffect(() => {
+        console.log('asdasdasd')
         if(search.length > 0) {
             searchBusiness(search)
         }
@@ -99,7 +126,7 @@ const ReceiptNoBusinessModal = (props) => {
         }
     }
 
-    const Modal = (
+    return (
         
         <IonPage>
             <IonHeader>
@@ -107,7 +134,7 @@ const ReceiptNoBusinessModal = (props) => {
                     <IonTitle>Upload Receipt</IonTitle>
                     <IonButtons slot="end">
                         <IonButton fill='clear'>
-                            <IonButton onClick={()=>dismiss()}>Close</IonButton>
+                            <IonButton onClick={()=>props.onDismiss()}>Close</IonButton>
                         </IonButton>
                     </IonButtons>
                 </IonToolbar>
@@ -126,7 +153,7 @@ const ReceiptNoBusinessModal = (props) => {
                                             Search and select the business where you got the receipt from 
                                             <IonRouterLink onClick={()=>{
                                                 props.setSelectedSegment('orders')
-                                                props.setShowModal(false)
+                                                props.onDismiss()
                                             }}>
                                                 &nbsp;or go through your recent orders
                                             </IonRouterLink>
@@ -195,17 +222,4 @@ const ReceiptNoBusinessModal = (props) => {
    
     )
 
-    const [present, dismiss] = useIonModal(Modal, {
-        onDismiss: setTimeout(() => {
-            props.setShowModal(false)
-        }, 500)
-    });
-
-    useEffect(() => {
-        props.showModal && present();
-    }, [props.showModal])
-    
-    return false
 }
-
-export default ReceiptNoBusinessModal

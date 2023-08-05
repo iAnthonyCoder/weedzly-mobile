@@ -71,9 +71,9 @@ const BrandProductsList = () => {
                 settings={filtering_settings.productsPage.static[2]}
                 filterString={filterString}
             />
-            <IonContent>
-                <section className='ion-padding-top'>
-                    <IonChip 
+            <div>
+                <section className='ion-padding-top' style={{width:'100%', display:'flex',overflowX: 'auto', whiteSpace: 'nowrap'}}>
+                    <div><IonChip 
                         outline={filterString.split(`&filterfield[]=${filtering_settings.productsPage.static[1].field}&filtertype[]=${filtering_settings.productsPage.static[1].type}`).length - 1 > 0 ? false : true}
                         color='primary' 
                         onClick={()=>setProductTypesModal(true)}
@@ -83,8 +83,8 @@ const BrandProductsList = () => {
                             {filterString.split(`&filterfield[]=${filtering_settings.productsPage.static[1].field}&filtertype[]=${filtering_settings.productsPage.static[1].type}`).length - 1 > 0 && ` (${filterString.split(`&filterfield[]=${filtering_settings.productsPage.static[1].field}&filtertype[]=${filtering_settings.productsPage.static[1].type}`).length - 1})`} 
                         </IonLabel>	
                         <IonIcon icon={chevronDown} />
-                    </IonChip>
-                    <IonChip 
+                    </IonChip></div>
+                    <div><IonChip 
                         outline={filterString.split(`&filterfield[]=${filtering_settings.productsPage.static[0].field}&filtertype[]=${filtering_settings.productsPage.static[0].type}`).length - 1 > 0 ? false : true}
                         color='primary' 
                         onClick={()=>setGeneticsModals(true)}
@@ -94,8 +94,8 @@ const BrandProductsList = () => {
                             {filterString.split(`&filterfield[]=${filtering_settings.productsPage.static[0].field}&filtertype[]=${filtering_settings.productsPage.static[0].type}`).length - 1 > 0 && ` (${filterString.split(`&filterfield[]=${filtering_settings.productsPage.static[0].field}&filtertype[]=${filtering_settings.productsPage.static[0].type}`).length - 1})`} 
                         </IonLabel>	
                         <IonIcon icon={chevronDown} />
-                    </IonChip>
-                    <IonChip 
+                    </IonChip></div>
+                    <div><IonChip 
                         outline={filterString.split(`&filterfield[]=${filtering_settings.productsPage.static[2].field}&filtertype[]=${filtering_settings.productsPage.static[2].type}`).length - 1 > 0 ? false : true}
                         color='primary' 
                         onClick={()=>setRatingModal(true)}
@@ -105,7 +105,7 @@ const BrandProductsList = () => {
                             {filterString.split(`&filterfield[]=${filtering_settings.productsPage.static[2].field}&filtertype[]=${filtering_settings.productsPage.static[2].type}`).length - 1 > 0 && ` (${filterString.split(`&filterfield[]=${filtering_settings.productsPage.static[2].field}&filtertype[]=${filtering_settings.productsPage.static[2].type}`).length - 1})`}
                         </IonLabel>	
                         <IonIcon icon={chevronDown} />
-                    </IonChip>
+                    </IonChip></div>
                 </section>
                 <section className='full-width' >
                     {/* <IonTitle className='ion-no-margin'>All Strains</IonTitle> */}
@@ -151,7 +151,7 @@ const BrandProductsList = () => {
                         )
                     }
                 </section>
-            </IonContent>
+            </div>
         </>
     )
 

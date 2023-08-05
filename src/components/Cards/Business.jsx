@@ -11,7 +11,6 @@ import {
     useIonRouter,
     IonImg,
 } from '@ionic/react';
-import cookie from 'js-cookie'
 import { starOutline } from 'ionicons/icons';
 import lodash from 'lodash';
 import SVG from 'react-inlinesvg'
@@ -70,7 +69,7 @@ const BusinessCard = (props) => {
 				
 				<div>
 				{
-					props.item.type === 'DISPENSARY' && <>
+					props.item.type === 'DISPENSARY' && !props.hideDistance && <>
         		       <small style={{display:'flex', alignItems:'center', marginTop:'4px'}}>
 						   	<SVG
 							   

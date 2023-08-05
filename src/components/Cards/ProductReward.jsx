@@ -4,7 +4,6 @@ import _ from 'lodash'
 import React, { useState, useEffect } from 'react'
 import { MY_LOCATION } from '../../helpers/constants';
 import WeightSanitizer from '../../helpers/WeightSanitizer';
-import cookie from 'js-cookie'
 import { useSelector } from 'react-redux';
 import ImageUrlFormatter from '../../helpers/ImageUrlFormatter';
 
@@ -27,7 +26,7 @@ const ProductRewardCard = (props) => {
 
     return (
         
-        <IonCard className='ion-no-margin' onClick={()=>router.push(props.business_slug ? `/businesses/${props.business_slug}/products/${props.item.slug}` : `/brands/${props.item.brand.slug}/products/${props.item.slug}`)} style={{height:'100%'}}>
+        <IonCard className='ion-no-margin' onClick={()=>router.push(props.business_slug ? `/businesses/${props.business_slug}/products/${props.item.slug}` : `/brandproduct/${props.item.brand.slug}/${props.item.slug}`)} style={{height:'100%'}}>
             <IonImg 
                 style={{
                     objectFit: 'cover'

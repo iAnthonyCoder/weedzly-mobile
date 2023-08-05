@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 import MainMap from '../../components/Map/MainMap'
-import cookie from 'js-cookie'
 import { MY_LOCATION } from '../../helpers/constants'
 import { createGesture, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonItem, IonMenuButton, IonModal, IonProgressBar, IonSlide, IonSlides, IonTitle, IonToolbar, IonList, IonButton, IonPage, IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/react'
 import { dispensaryService } from '../../services'
@@ -79,7 +78,7 @@ const Map = () => {
     }
 
     const [ pageInfo, setPageInfo ] = useState({
-        pageSize: 20,
+        pageSize: 15,
         pageNumber: 1
     })
 
@@ -462,32 +461,31 @@ const Map = () => {
                 </IonFab>
             }
 
-            <IonContent className={`slider-wrapper ${sliderPositionClass}`}
+            { entities && entities.length > 0 && <IonContent className={`slider-wrapper ${sliderPositionClass}`}
                 style={{transform:'translateY('+sliderPosition+'px)', display:!showModal?'flex':'none'}}
              >
-                {
-                    entities && entities.length > 0 && <IonSlides 
-                        ref={slidesRef}
-                        slideNex
-                        options={slideOpts}
-                        onIonSlideReachEnd={(e) => {
-                            if(!actionsLoading){
-                                nextPage()
-                            }
-                        }}
-                        onIonSlideDidChange={(e) => updateActiveSlide(e.target.swiper.activeIndex, false)}
-                        // onIonSlidesDidLoad={(e) => {console.log(e)}}
-                    >
-                        {
-                            entities.map((entity, i) => <IonSlide 
-                                key={i}
-                            >
-                                <RetailerMapCard entity={entity} sliderPositionClass={sliderPositionClass} setSliderPositionClass={setSliderPositionClass} className='dispensary-card' />
-                            </IonSlide>)
+                <IonSlides 
+                    ref={slidesRef}
+                    slideNex
+                    options={slideOpts}
+                    onIonSlideReachEnd={(e) => {
+                        if(!actionsLoading){
+                            nextPage()
                         }
-                    </IonSlides>
-                }
-            </IonContent>
+                    }}
+                    onIonSlideDidChange={(e) => updateActiveSlide(e.target.swiper.activeIndex, false)}
+                    // onIonSlidesDidLoad={(e) => {console.log(e)}}
+                >
+                    {
+                        entities.map((entity, i) => <IonSlide 
+                            key={i}
+                        >
+                            <RetailerMapCard entity={entity} sliderPositionClass={sliderPositionClass} setSliderPositionClass={setSliderPositionClass} className='dispensary-card' />
+                        </IonSlide>)
+                    }
+                </IonSlides>
+                
+            </IonContent>}
             <Tabs style={{zIndex:'201'}} />
         </IonPage>
     )

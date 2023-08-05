@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import * as turf from "@turf/turf";
 import './Deal.css'
 import { MY_LOCATION } from '../../helpers/constants';
-import cookie from 'js-cookie'
 import { dealsCategories, dealsTagetAudiences } from '../../helpers/dealsFeatures';
 
 const DealCard = ({item, showDays, hideDispensaryName, businessSlug}) => {

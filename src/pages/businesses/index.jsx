@@ -14,7 +14,6 @@ import {
 	useIonRouter,
 } from '@ionic/react';
 import React, { useState, useEffect, useRef } from 'react'
-import cookie from 'js-cookie'
 import './index.css';
 import { dispensaryService } from '../../services';
 import { filterOutline, heart, locationOutline, locationSharp } from 'ionicons/icons';
@@ -119,17 +118,17 @@ const Businesses = (props) => {
   	    	</IonHeader>
   	    	<IonContent fullscreen overflow-scroll='false'>
 
-			  	<section>
+			  	<section style={{width:'100%', display:'flex',overflowX: 'auto', whiteSpace: 'nowrap'}}>
 					{
-					  	location && <IonChip color='tertiary' onClick={()=>setShowLocationModal(true)}>
+					  	location && <div><IonChip color='tertiary' onClick={()=>setShowLocationModal(true)}>
 							<IonIcon icon={locationSharp} />
 							<IonLabel>
 								{JSON.parse(location).place} • {JSON.parse(String(locationC)).boundingRadius/1609.34}mi
 							</IonLabel>
-						</IonChip>
+						</IonChip></div>
 					}
 					{
-						filtering_settings.businessesPage.options.map((x, i)=><IonChip 
+						filtering_settings.businessesPage.options.map((x, i)=><div><IonChip 
 							color='primary' 
 							outline={filterString.includes(x.value) ? false : true}
 							onClick={()=>filterer(x.value, filtering_settings.businessesPage.multi)}
@@ -137,7 +136,7 @@ const Businesses = (props) => {
 							<IonLabel>
 								{x.label}
 							</IonLabel>	
-						</IonChip>)
+						</IonChip></div>)
 					}
 				</section>
 

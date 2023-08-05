@@ -4,7 +4,6 @@ import _ from 'lodash'
 import React, { useState, useEffect } from 'react'
 import { MY_LOCATION } from '../../helpers/constants';
 import WeightSanitizer from '../../helpers/WeightSanitizer';
-import cookie from 'js-cookie'
 import ImageUrlFormatter from '../../helpers/ImageUrlFormatter';
 
 const ProductCard = (props) => {
@@ -24,7 +23,7 @@ const ProductCard = (props) => {
 
     return (
         
-        <IonCard className='ion-no-margin' onClick={()=>router.push(props.business_slug ? `/businesses/${props.business_slug}/products/${props.item.slug}` : `/brands/${props.item.brand.slug}/products/${props.item.slug}`)} style={{height:'100%'}}>
+        <IonCard className='ion-no-margin' onClick={()=>router.push(props.business_slug ? `/businesses/${props.business_slug}/products/${props.item.slug}` : `/brandproduct/${props.item.brand.slug}/${props.item.slug}`)} style={{height:'100%'}}>
             <IonImg 
                 style={{
                     objectFit: 'cover'
@@ -52,7 +51,7 @@ const ProductCard = (props) => {
                         ) : (<small className="category-link-card text-muted capitalize text-light">-</small>)
                     }
                     {
-                        <h4 style={{color:'black'}}>{props.item.name}</h4>
+                        <h4 className='ellipsed-text' style={{color:'black'}}>{props.item.name}</h4>
                     }
                     {
                         <p style={{fontSize:'12px'}}>

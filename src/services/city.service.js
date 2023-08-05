@@ -5,7 +5,8 @@ const baseUrl = `${api}${'cities'}`;
 
 export const cityService = {
     getAll,
-    findByUUID
+    findByUUID,
+    findBySlug
 };
 
 function getAll(query='') {
@@ -14,4 +15,8 @@ function getAll(query='') {
 
 function findByUUID(UUID) {
     return fetchWrapper.get(`${baseUrl}/${UUID}`);
+}
+
+function findBySlug(slug, abbr) {
+    return fetchWrapper.get(`${baseUrl}/bySlug/${slug}/${abbr}`);
 }

@@ -6,7 +6,6 @@ import { searchService } from '../../services/search.service'
 import './Index.css'
 import queryString from 'query-string'
 import { MY_LOCATION } from '../../helpers/constants'
-import cookie from 'js-cookie'
 import FullSpinner from '../../components/Common/FullSpinner'
 
 const Search = () => {
@@ -50,7 +49,7 @@ const Search = () => {
 
         if(type==='products'){
             data.icon=data.picture[0]
-            data.link=`/brands/${data.brand.slug}/products/${data.slug}`
+            data.link=`/brandproduct/${data.brand.slug}/${data.slug}`
             data.strinking = 'Product'; 
             return data
         }

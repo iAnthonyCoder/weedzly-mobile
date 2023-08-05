@@ -175,12 +175,10 @@ const Order = (props) => {
                                                     <img src={x.picture ? x.picture : 'assets/images/default-pic.png'} />
                                                 </IonAvatar>
                                                 <div style={{display:'flex', flexDirection:'column'}}>
-                                                    <IonText>
-                                                        <span>{x.productName}</span>
+                                                    <IonText style={{fontSize:'12px'}}>
+                                                        <strong><span>{x.productName}</span></strong> by <IonText color='success'><strong>{x.brandName}</strong></IonText>
                                                     </IonText>
-                                                    <IonText>
-                                                        <small>{x.brandName}</small>
-                                                    </IonText>
+                                                    
                                                     <IonText>
                                                         <small><strong>{x.quantity} x {x.variantWeight} {x.variantUnit}</strong></small>
                                                     </IonText>
@@ -193,9 +191,9 @@ const Order = (props) => {
                                                         }
                                                     </div>
                                                     {
-                                                        props.nugsSubtotal > 0 && <div className="product-total">
+                                                        data.totalWPoints > 0 && <div className="product-total">
                                                         {
-                                                            x.reward && <span className="subtotal-amount">&#127811;{( x.WPointsValue).toFixed(2)}</span>
+                                                            x.reward && <span className="subtotal-amount">&#127811;{( x.WPointsValue)}</span>
                                                         }
                                                         </div>
                                                     }
@@ -233,7 +231,7 @@ const Order = (props) => {
                                         }
                                         <div style={{display:'flex', justifyContent:'space-between'}}>
                                             <IonText>
-                                                Items:
+                                                Products:
                                             </IonText>
                                             <IonText>
                                                 <strong>${data.subtotalMedical + data.subtotalRecreational}</strong>
@@ -274,10 +272,10 @@ const Order = (props) => {
                                             }
                                             <div style={{display:'flex', justifyContent:'space-between'}}>
                                                 <IonText>
-                                                    Items:
+                                                    Products:
                                                 </IonText>
                                                 <IonText>
-                                                    <strong><IonIcon color='success' icon={leaf}></IonIcon>{data.totalWPoints + data.totalWPoints} Nugs</strong>
+                                                    <strong>&#127811;{data.totalWPoints} Nugs</strong>
                                                 </IonText>
                                             </div>
                                             <div style={{display:'flex', justifyContent:'space-between'}}>
@@ -293,7 +291,7 @@ const Order = (props) => {
                                                     Total:
                                                 </IonText>
                                                 <IonText color='primary' style={{fontSize:'16px'}}>
-                                                    <strong><IonIcon color='success' icon={leaf}></IonIcon>{data.totalWPoints + data.totalWPoints}</strong>
+                                                    <strong>&#127811;{data.totalWPoints}</strong>
                                                 </IonText>
                                             </div>
                                         </div>

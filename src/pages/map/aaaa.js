@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 import MainMap from '../../components/Map/MainMap'
-import cookie from 'js-cookie'
 import { MY_LOCATION } from '../../helpers/constants'
 import { createGesture, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonItem, IonMenuButton, IonModal, IonProgressBar, IonSlide, IonSlides, IonTitle, IonToolbar, IonList, IonButton, IonPage, IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/react'
 import { dispensaryService } from '../../services'
@@ -43,7 +42,6 @@ const Map = () => {
 
     useEffect(() => {
         let _viewportFromCookies = JSON.parse(localStorage.getItem(MY_LOCATION))
-        console.log(_viewportFromCookies)
         if (map.current) return;
         map.current = new mapboxgl.Map({
             container: mapContainer.current,

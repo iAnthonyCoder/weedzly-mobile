@@ -16,7 +16,7 @@ const filtering_settings = {
                 label: 'Categories',
                 icon: 'bx-vial',
                 items: product_type,
-                field:'category',
+                field:'type',
                 type: 'eq',
                 multi: true,
             },

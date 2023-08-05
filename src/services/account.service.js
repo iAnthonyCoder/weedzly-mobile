@@ -1,6 +1,4 @@
 import { fetchWrapper } from '../helpers/fetch-wrapper'
-import cookie from 'js-cookie'
-
 const api = process.env.REACT_APP_PUBLIC_API_URL
 const baseUrl = api;
 const accountUrl = `${api}users`;

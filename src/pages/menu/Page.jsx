@@ -1,7 +1,6 @@
 import { IonModal, IonButton, IonContent, IonRow, IonHeader, IonToolbar, IonTitle, IonButtons, IonIcon, IonCol, IonGrid, IonCard, IonCardHeader, IonRippleEffect, useIonRouter, IonText, IonPage } from '@ionic/react';
 import { person, storefront, car, pricetag, rose, flask, map, book, library, bookmark, logIn, personAdd, locate } from 'ionicons/icons';
 import './Page.css'
-import cookie from 'js-cookie';
 import _ from 'lodash'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';

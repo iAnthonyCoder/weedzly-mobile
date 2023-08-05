@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "152395324248",
+    "project_id": "still-gravity-321223",
+    "storage_bucket": "still-gravity-321223.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152395324248:android:61c84bfa6ec5c7cdc4a32d",
+        "android_client_info": {
+          "package_name": "com.weedzly.weedzly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "152395324248-bofb9i9rvln4fbhn3t2k1rouvmbub7q2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe8wrqmgrrW7IPaWjiJiP832I95tTha-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "152395324248-bofb9i9rvln4fbhn3t2k1rouvmbub7q2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,8 +1,7 @@
 // @ts-nocheck
 import React, { useState, useEffect, useRef } from 'react';
-import { IonModal, IonButton, IonContent, IonRow, IonLoading, IonHeader, IonToolbar, IonTitle, IonButtons, IonItem, IonLabel, IonInput, IonList, IonIcon, IonCol, IonGrid, IonCard, IonCardHeader, IonRippleEffect, useIonRouter, IonText, IonBackButton, IonProgressBar, IonToast, IonDatetime } from '@ionic/react';
+import { IonModal, IonButton, IonContent, IonRow, IonLoading, IonHeader, IonToolbar, IonTitle, IonButtons, IonItem, IonLabel, IonInput, IonList, IonIcon, IonCol, IonGrid, IonCard, IonCardHeader, IonRippleEffect, useIonRouter, IonText, IonBackButton, IonProgressBar, IonToast, IonDatetime, useIonModal, IonPage } from '@ionic/react';
 import './TemporaryLocation.css'
-import cookie from 'js-cookie';
 import * as Yup from 'yup';
 import _ from 'lodash'
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +14,32 @@ import MaskedInput from 'react-text-mask'
 
 import './ProfileUpdateModal.css'
 
-export const ProfileUpdateModal = (props) => {
+const ProfileUpdateModal = (props) => {
+
+    const handleDismiss = () => {
+        console.log('asdasd')
+        dismiss()
+        setTimeout(() => {
+            props.setShowModal(false)
+        }, 500)
+    }
+
+    const [present, dismiss] = useIonModal(Modal, {
+        ...props,
+        setShowToast: props.setShowToast,
+        onDismiss: handleDismiss
+    });
+
+    useEffect(() => {
+        props.showModal && present();
+    }, [props.showModal])
+    
+    return false
+}
+    
+export default ProfileUpdateModal
+
+const Modal = (props) => {
 
     const user = useSelector(state => state.user)
     const [ showToast, setShowToast ] = useState({
@@ -71,7 +95,8 @@ export const ProfileUpdateModal = (props) => {
                 let _user = await accountService.getMe()
                 await dispatch(userLogin({...user, ..._user}))
                 setSubmitting(false)
-                props.setShowModal(false)
+                
+                props.onDismiss()
             })
             .catch(error => {
                 setSubmitting(false)
@@ -337,7 +362,7 @@ export const ProfileUpdateModal = (props) => {
     });
 
     return (
-        <IonModal isOpen={props.showModal} swipeToClose={true}>
+        <IonPage>
             {
                formik.isSubmitting && 
                    <IonProgressBar type="indeterminate"></IonProgressBar>
@@ -345,7 +370,10 @@ export const ProfileUpdateModal = (props) => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonButton onClick={()=>props.setShowModal(false)}  fill='clear'>
+                        <IonButton onClick={()=>{
+                           
+                            props.onDismiss()
+                        }}  fill='clear'>
 					    	<IonIcon slot="icon-only" icon={arrowBack} />
 					    </IonButton>
                     </IonButtons>
@@ -372,6 +400,9 @@ export const ProfileUpdateModal = (props) => {
                 position="bottom"
                 color={showToast.type}
                 translucent={true}
+                onDidDismiss={()=>{setShowToast({
+                    open: false
+                })}}
                 duration={3000}
                 buttons={[
                     {
@@ -380,6 +411,6 @@ export const ProfileUpdateModal = (props) => {
                     }
                 ]}
             />
-        </IonModal>
+        </IonPage>
     );
 };

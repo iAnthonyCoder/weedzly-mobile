@@ -1,9 +1,9 @@
-import { IonAvatar, IonContent, IonHeader, IonItem, IonLabel, IonList, IonLoading, IonPage, IonRippleEffect, IonText, IonToast } from '@ionic/react'
+import { IonAvatar, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonLoading, IonPage, IonRippleEffect, IonText, IonToast } from '@ionic/react'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TopToolbar from '../../components/Common/TopToolbar'
-import { ProfileUpdateModal } from '../../components/Modals/ProfileUpdateModal'
+import ProfileUpdateModal from '../../components/Modals/ProfileUpdateModal'
 import { isPlatform } from '@ionic/react';
 
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
@@ -12,6 +12,7 @@ import { Storage } from '@capacitor/storage';
 import { Capacitor } from '@capacitor/core';
 import { accountService } from '../../services'
 import { userLogin } from '../../store/actions'
+import { calendarOutline, callOutline, cameraOutline, carOutline, idCardOutline, keyOutline, mailOutline, peopleOutline, personCircleOutline, personOutline } from 'ionicons/icons'
 const Account = () => {
 
     const { user } = useSelector(state => state)
@@ -46,6 +47,11 @@ const Account = () => {
             .then(res => res.json())
             .then( res =>{
                 updateUser({[field]: res.secure_url})
+                setShowToast({
+                    open: true,
+                    type:'primary',
+                    message:'Image Updated'
+                })
             }).catch(er => {
                 setActionsLoading(false)
                 setShowToast({
@@ -111,7 +117,7 @@ const Account = () => {
                 ></TopToolbar>
             </IonHeader>
             <IonContent>
-                <IonItem style={{borderBottom:'1px solid #121212'}}>
+                <IonItem lines='full'>
                     <div className='ion-padding-top ion-padding-bottom' style={{display:'flex', alignItems:'center'}}>
                         <IonAvatar slot='start'>
                             <img src={user.picture || 'assets/images/user.png'}></img>
@@ -123,32 +129,44 @@ const Account = () => {
                         </IonText>
                     </div>
                 </IonItem>
-                <br/>
+                <br />
                 <IonList>
                     <IonLabel className='ion-padding-start ion-padding-end'><IonText color='primary'><small>ACCOUNT</small></IonText></IonLabel>
                     <IonItem onClick={()=>handleUpdateModal('name')} className='ion-activatable ripple-parent'>
                         <IonRippleEffect></IonRippleEffect>
+                        <IonAvatar slot="start">
+                            <IonIcon color='medium' style={{width:'100%', height:'100%'}} icon={personOutline}></IonIcon>
+                        </IonAvatar>
                         <IonText className='ion-padding-bottom ion-padding-top'>
                             <IonLabel>{user.name || 'Tap to set name'}</IonLabel>
                             <IonText color='medium'><small color='medium'>Full name</small></IonText>
                         </IonText>
                     </IonItem>
-                    <IonItem onClick={()=>handleUpdateModal('email')} className='ion-activatable ripple-parent'>
-                        <IonRippleEffect></IonRippleEffect>
-                        <IonText className='ion-padding-bottom ion-padding-top'>
-                            <IonLabel>{user.email}</IonLabel>
-                            <IonText color='medium'><small color='medium'>Email address</small></IonText>
-                        </IonText>
-                    </IonItem>
                     <IonItem className='ion-activatable ripple-parent'>
                         <IonRippleEffect></IonRippleEffect>
+                        <IonAvatar slot="start">
+                            <IonIcon color='medium' style={{width:'100%', height:'100%'}} icon={peopleOutline}></IonIcon>
+                        </IonAvatar>
                         <IonText className='ion-padding-bottom ion-padding-top'>
                             <IonLabel>{user.nickname}</IonLabel>
                             <IonText color='medium'><small color='medium'>Nickname</small></IonText>
                         </IonText>
                     </IonItem>
+                    <IonItem onClick={()=>handleUpdateModal('email')} className='ion-activatable ripple-parent'>
+                        <IonRippleEffect></IonRippleEffect>
+                        <IonAvatar slot="start">
+                            <IonIcon color='medium' style={{width:'100%', height:'100%'}} icon={mailOutline}></IonIcon>
+                        </IonAvatar>
+                        <IonText className='ion-padding-bottom ion-padding-top'>
+                            <IonLabel>{user.email}</IonLabel>
+                            <IonText color='medium'><small color='medium'>Email address</small></IonText>
+                        </IonText>
+                    </IonItem>
                     <IonItem onClick={()=>handleUpdateModal('password')} className='ion-activatable ripple-parent'>
                         <IonRippleEffect></IonRippleEffect>
+                        <IonAvatar slot="start">
+                            <IonIcon color='medium' style={{width:'100%', height:'100%'}} icon={keyOutline}></IonIcon>
+                        </IonAvatar>
                         <IonText className='ion-padding-bottom ion-padding-top'>
                             <IonLabel>{'************'}</IonLabel>
                             <IonText color='medium'><small color='medium'>Password</small></IonText>
@@ -156,17 +174,23 @@ const Account = () => {
                     </IonItem>
                     <IonItem onClick={()=>handleUpdateModal('birthdate')} className='ion-activatable ripple-parent'>
                         <IonRippleEffect></IonRippleEffect>
+                        <IonAvatar slot="start">
+                            <IonIcon color='medium' style={{width:'100%', height:'100%'}} icon={calendarOutline}></IonIcon>
+                        </IonAvatar>
                         <IonText className='ion-padding-bottom ion-padding-top'>
                             <IonLabel>{user.birthdate ? moment(user.birthdate).format('MMMM Do YYYY') : 'Tap to set birthday'}</IonLabel>
                             <IonText color='medium'><small color='medium'>Birthday</small></IonText>
                         </IonText>
                     </IonItem>
                 </IonList>
-                <br/>
+                <br />
                 <IonList>
                     <IonLabel className='ion-padding-start ion-padding-end'><IonText color='primary'><small>CONTACT & ADDRESS</small></IonText></IonLabel>
                     <IonItem onClick={()=>handleUpdateModal('phone')} className='ion-activatable ripple-parent'>
                         <IonRippleEffect></IonRippleEffect>
+                        <IonAvatar slot="start">
+                            <IonIcon color='medium' style={{width:'100%', height:'100%'}} icon={callOutline}></IonIcon>
+                        </IonAvatar>
                         <IonText className='ion-padding-bottom ion-padding-top'>
                             <IonLabel>{user.phone || 'Tap to set phone number'}</IonLabel>
                             <IonText color='medium'><small color='medium'>Phone Number</small></IonText>
@@ -174,6 +198,9 @@ const Account = () => {
                     </IonItem>
                     <IonItem onClick={()=>handleUpdateModal('address')} className='ion-activatable ripple-parent'>
                         <IonRippleEffect></IonRippleEffect>
+                        <IonAvatar slot="start">
+                            <IonIcon color='medium' style={{width:'100%', height:'100%'}} icon={carOutline}></IonIcon>
+                        </IonAvatar>
                         <IonText className='ion-padding-bottom ion-padding-top'>
                             <IonLabel>{`${user.address_line_1 || ''} ${user.address_unit ? '#' : ''}${user.address_unit || ''}${user.address_unit ? ', ' : ''}${user.address_line_2 || ''}${user.address_line_2 ? ', ' : ''}${user.address_line_3 || ''}${user.address_line_3 ? ', ' : ''} ${user.address_zip || ''}`}
                             {!user.address_line_1 && !user.address_unit && !user.address_unit && !user.address_line_2 && !user.address_line_3 && !user.address_zip && 'Tap to set delivery address'}</IonLabel>
@@ -181,13 +208,14 @@ const Account = () => {
                         </IonText>
                     </IonItem>
                 </IonList>
-                <br/>
+                <br />
                 <IonList>
                     <IonLabel className='ion-padding-start ion-padding-end'><IonText color='primary'><small>MEDIA</small></IonText></IonLabel>
                     <IonItem onClick={()=>selectImage('picture')} className='ion-activatable ripple-parent'>
                         <IonRippleEffect></IonRippleEffect>
                         <IonAvatar slot='start'>
-                            <img src={user.picture || 'assets/images/user.png'} />
+                            {user.picture ? <img src={user.picture}></img> :<IonIcon color='medium' style={{width:'100%', height:'100%'}} icon={cameraOutline}></IonIcon> }
+                            
                         </IonAvatar>
                         <IonText className='ion-padding-bottom ion-padding-top'>
                             <IonLabel>Profile picture</IonLabel>
@@ -197,7 +225,8 @@ const Account = () => {
                     <IonItem onClick={()=>selectImage('picture_id')} className='ion-activatable ripple-parent'>
                         <IonRippleEffect></IonRippleEffect>
                         <IonAvatar slot='start'>
-                            <img src={user.picture_id || 'assets/images/default-pic.png'} />
+                        {user.picture_id ? <img src={user.picture_id}></img> :<IonIcon color='medium' style={{width:'100%', height:'100%'}} icon={idCardOutline}></IonIcon> }
+                            
                         </IonAvatar>
                         <IonText className='ion-padding-bottom ion-padding-top'>
                             <IonLabel>ID Picture</IonLabel>
@@ -205,7 +234,7 @@ const Account = () => {
                         </IonText>
                     </IonItem>
                 </IonList>
-                <br/>
+                <br />
             </IonContent>
             <IonToast
                 isOpen={showToast.open}

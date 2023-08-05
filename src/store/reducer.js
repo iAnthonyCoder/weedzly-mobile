@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import cookie from 'js-cookie';
 
 import { 
     ADD_TO_CART,
@@ -28,7 +27,9 @@ import {
     FETCHED_CART,
     SET_SITEWIDE_DEAL,
     GET_NOTIFICATIONS,
-    UPDATE_NOTIFICATION
+    UPDATE_NOTIFICATION,
+    CHANGE_MUST_NAVIGATE_TO,
+    ADD_EMBEEDED_NOTIFICATION
 } from './actions_constants'
 import _ from 'lodash';
 
@@ -76,8 +77,10 @@ const initState = {
         fetched: false,
         hasMore:false
     },
+    embeededNotification:{},
     fetched_notifications:false,
-    fetched_favorites: false
+    fetched_favorites: false,
+    mustNavigateTo:''
 }
 
 
@@ -366,21 +369,31 @@ const reducers = (state = initState, action) => {
         }
     }
 
-
-
     if(action.type === ADD_SHIPPING){
         return {
             ...state,
             shipping: state.shipping += 30
         }
     }
+    
+    if(action.type === CHANGE_MUST_NAVIGATE_TO){
+        return {
+            ...state,
+            mustNavigateTo: action.url
+        }
+    }
 
+    if(action.type === ADD_EMBEEDED_NOTIFICATION){
+        return {
+            ...state,
+            embeededNotification: action.notification
+        }
+    }
     
     else {
         return state
     }
 }
-
 
 
 export const store = createStore(reducers, 

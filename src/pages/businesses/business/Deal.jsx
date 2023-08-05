@@ -1,11 +1,10 @@
-import { IonAvatar, IonBadge, IonButton, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonText, IonToolbar, useIonPopover, useIonRouter } from '@ionic/react'
+import { IonAvatar, IonBackButton, IonBadge, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonPage, IonText, IonTitle, IonToolbar, useIonPopover, useIonRouter } from '@ionic/react'
 import React, { useEffect, useState } from 'react'
 import FullSpinner from '../../../components/Common/FullSpinner'
 import TopToolbar from '../../../components/Common/TopToolbar'
 import { MY_LOCATION } from '../../../helpers/constants'
 import { dispensaryService } from '../../../services'
 import { dealService } from '../../../services/deal.service'
-import cookie from 'js-cookie'
 import * as turf from "@turf/turf";
 import CheckIfOpen from '../../../helpers/time'
 import { dealsTagetAudiences } from '../../../helpers/dealsFeatures'
@@ -122,11 +121,23 @@ const DealPage = (props) => {
                 />
             }
             <IonHeader>
-                <TopToolbar 
-                    enableBackButton={true}
-                    disableSearch={true}
-                    title={actionsLoading ? 'Loading...' : deal.name}
-                />
+                
+                <IonToolbar>
+			        <IonButtons slot="start">
+			        	<IonBackButton />
+			        </IonButtons>
+  	    	        <IonTitle>{deal.name}</IonTitle>
+                    <IonButtons slot="end">
+			            <IonButton fill='clear' onClick={(e) =>
+                            present({
+                                event: e.nativeEvent,
+                            })
+                        }
+                    >
+                        <IonIcon slot="icon-only" icon={ellipsisVertical}/>
+			            </IonButton>
+  	    	        </IonButtons>
+                </IonToolbar>
                 {
                     !actionsLoading && <IonToolbar style={{paddingLeft:'16px', paddingRight:'16px', display:'flex', alignItems:'center', paddingTop:'8px', paddingBottom:'8px'}}>
                         <IonAvatar slot='start'>
@@ -194,7 +205,7 @@ const DealPage = (props) => {
             </IonHeader>
             
             <IonContent color='light'>
-                <IonFab vertical="top" horizontal="end" slot="fixed" style={{transform:'translateY(-70%)'}}>
+                {/* <IonFab vertical="top" horizontal="end" slot="fixed" style={{transform:'translateY(-70%)'}}>
                     <IonFabButton 
                         color='light'
                         onClick={(e) =>
@@ -205,7 +216,7 @@ const DealPage = (props) => {
                     >
                         <IonIcon icon={ellipsisVertical}/>
                     </IonFabButton>
-                </IonFab>
+                </IonFab> */}
                 {
                     actionsLoading ? (
                         <FullSpinner />

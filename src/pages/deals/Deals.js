@@ -4,7 +4,6 @@ import TopToolbar from '../../components/Common/TopToolbar'
 import _ from 'lodash'
 import queryString from 'query-string'
 import { dealService } from '../../services/deal.service'
-import cookie from 'js-cookie'
 import moment from 'moment'
 import DealCard from '../../components/Cards/Deal'
 import { deal_target, product_type_deals } from '../../config/static_filters'
@@ -16,6 +15,7 @@ import FilterModal from '../../components/Modals/FilterModal'
 import FilterDaysModal from '../../components/Modals/FilterDaysModal'
 import { TemporaryLocation } from '../../components/Modals/TemporaryLocation'
 import Tabs from '../../components/Tabs/Tabs'
+
 
 const _categories = [
     {
@@ -51,11 +51,15 @@ export default function Deals () {
         setDefaultParams
 	] = useInfiniteScroll({
 		service: selectedCategory.value === 'overview' ? dealService.getAll : dealService.getNear,
-		defaultParams: {},
+		// defaultParams: queryString.parse(window.location.search, {arrayFormat:'bracket'}),
         includeLocation: true,
 		sortingOptions: sorting_settings.dealsPage
 	})
 
+    useEffect(() => {
+        filterer(window.location.search.replace('?', '&'))
+    }, [])
+    
 
     useEffect(() => {
         let _days = []
@@ -166,16 +170,16 @@ export default function Deals () {
                         }
                     </div>
                 } */}
-                <section>
+                <section style={{width:'100%', display:'flex',overflowX: 'auto', whiteSpace: 'nowrap'}}>
                     {
-					  	location && <IonChip color='tertiary' onClick={()=>setShowLocationModal(true)}>
+					  	location && <div><IonChip color='tertiary' onClick={()=>setShowLocationModal(true)}>
 							<IonIcon icon={locationSharp} />
 							<IonLabel>
 								{JSON.parse(location).place} • {JSON.parse(String(locationC)).boundingRadius/1609.34}mi
 							</IonLabel>
-						</IonChip>
+						</IonChip></div>
 					}
-                    <IonChip 
+                    <div><IonChip 
                         outline={filterString.split(`&filterfield[]=${filtering_settings.dealsPage.static[0].field}&filtertype[]=${filtering_settings.dealsPage.static[0].type}`).length - 1 > 0 ? false : true}
 						color='primary' 
                         onClick={()=>setTargetAudienceModalOpened(true)}
@@ -184,7 +188,7 @@ export default function Deals () {
 						    Target Audiences {filterString.split(`&filterfield[]=${filtering_settings.dealsPage.static[0].field}&filtertype[]=${filtering_settings.dealsPage.static[0].type}`).length - 1 > 0 && ` (${filterString.split(`&filterfield[]=${filtering_settings.dealsPage.static[0].field}&filtertype[]=${filtering_settings.dealsPage.static[0].type}`).length - 1})`}
 						</IonLabel>	
                         <IonIcon icon={chevronDown} />
-					</IonChip>
+					</IonChip></div>
                     <FilterModal 
                         showModal={targetAudienceModalOpened}
                         setShowModal={setTargetAudienceModalOpened}
@@ -193,7 +197,7 @@ export default function Deals () {
                         settings={filtering_settings.dealsPage.static[0]}
                         filterString={filterString}
                     />
-                    <IonChip 
+                     <div><IonChip 
                         outline={filterString.split(`&filterfield[]=${filtering_settings.dealsPage.static[1].field}&filtertype[]=${filtering_settings.dealsPage.static[1].type}`).length - 1 > 0 ? false : true}
 						color='primary' 
                         onClick={()=>setProductTypesModalOpened(true)}
@@ -202,7 +206,7 @@ export default function Deals () {
 						    Product Types {filterString.split(`&filterfield[]=${filtering_settings.dealsPage.static[1].field}&filtertype[]=${filtering_settings.dealsPage.static[1].type}`).length - 1 > 0 && ` (${filterString.split(`&filterfield[]=${filtering_settings.dealsPage.static[1].field}&filtertype[]=${filtering_settings.dealsPage.static[1].type}`).length - 1})`}
 						</IonLabel>	
                         <IonIcon icon={chevronDown} />
-					</IonChip>
+					</IonChip></div>
                     <FilterModal 
                         showModal={productTypesModalOpened}
                         setShowModal={setProductTypesModalOpened}

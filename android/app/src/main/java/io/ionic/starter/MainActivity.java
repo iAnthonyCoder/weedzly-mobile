@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.weedzly.weedzly;
 
 import com.getcapacitor.BridgeActivity;
 

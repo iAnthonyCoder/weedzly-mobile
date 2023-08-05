@@ -70,7 +70,7 @@ const Receipts = (props) => {
                     }
                 ]}
             />
-            <IonFab  vertical="bottom" horizontal="end" slot="">
+            <IonFab  vertical="bottom" horizontal="end" slot="fixed">
                 <IonFabButton
                     style={{margin:0}} 
                     color='light' 

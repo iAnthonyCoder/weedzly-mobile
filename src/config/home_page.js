@@ -1,7 +1,6 @@
 import ArticleCard from "../components/Cards/Article";
 import { articleService } from "../services/article.service";
 import { brandService } from "../services/brand.service";
-import cookie from 'js-cookie'
 import { MY_LOCATION_PLACE } from "../helpers/constants";
 import BrandCard from "../components/Cards/Brand";
 import { dispensaryService } from "../services";
@@ -137,6 +136,8 @@ export const home_sliders = {
         subtitle:'Stay up to date with the cannabis world',
         urlButton: '/library',
         buttonText: 'See more',
+        paddingBottom: true,
+        borderBottom:true,
         geolocate: false,
        
         card: ArticleCard

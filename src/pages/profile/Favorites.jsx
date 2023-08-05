@@ -1,4 +1,4 @@
-import { IonActionSheet, IonAvatar, IonButton, IonChip, IonIcon, IonItem, IonLabel, IonList, IonSpinner, IonText } from '@ionic/react';
+import { IonActionSheet, IonAvatar, IonButton, IonChip, IonIcon, IonItem, IonLabel, IonList, IonRouterLink, IonSpinner, IonText, useIonRouter } from '@ionic/react';
 import { arrowDown, chevronDown, star } from 'ionicons/icons';
 import { useState } from 'react'
 import { useSelector } from 'react-redux';
@@ -8,13 +8,13 @@ import { MY_LOCATION } from '../../helpers/constants';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { favoriteService } from '../../services/favorite.service';
 import * as turf from "@turf/turf";
-import cookie from 'js-cookie'
 
 const Favorites = () => {
 
     const favorites = useSelector(state => state.favorites)
     const [ showActionSheet, setShowActionSheet ] = useState(false)
     const [ ScopedModel, setScopedModel ] = useState('products')
+   
 
     const [ 
 		items, 
@@ -96,6 +96,7 @@ const Favorites = () => {
                 }
             >
             </IonActionSheet>
+    
             <div>
                 {
                     loading ? (
@@ -125,10 +126,42 @@ export default Favorites
 
 const cards = (x, i, ScopedModel) => {
 
+    const getNearest = (x) => {
+        console.log(x);
+        let a = x.retailers && x.retailers.length > 0 && x.retailers.map(x => {
+            x.distance = turf.distance(
+                {
+                    "type": "Feature",
+                    "properties": {},
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [x.location.coordinates[0], x.location.coordinates[1] ]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {},
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [JSON.parse(localStorage.getItem(MY_LOCATION)).longitude, JSON.parse(localStorage.getItem(MY_LOCATION)).latitude]
+    
+                    }
+                }, 
+                { units: 'miles' }
+            )
+            return x
+        }).sort(function(a, b) {
+              return a.distance - b.distance;
+            })
+           
+        return a[0]
+    }
+
+    const router = useIonRouter()
     switch (ScopedModel) {
         case 'products':
             return (
-                <IonItem key={i}>
+                <IonItem key={i} onClick={()=>router.push(`/brandproduct/${x.brand.slug}/${x.slug}`)}>
                     <IonAvatar slot="start">
                         <img src={x.picture && x.picture.length > 0 ? x.picture[0] : 'assets/images/default-pic.png'} />
                     </IonAvatar>
@@ -148,27 +181,29 @@ const cards = (x, i, ScopedModel) => {
 
         case 'brands':
             return (
-                <IonItem key={i}>
-                    <IonAvatar slot="start">
-                        <img src={x.logo} />
-                    </IonAvatar>
-                    <IonLabel>
-                        <h2>{x.name}</h2>
-                        <h3>Cannabis Brand</h3>
-                        {/* <p>I've got enough on my plate as it is, and I...</p> */}
-                    </IonLabel>
-                    <FavoriteButton 
-                        collection = 'brands'
-                        _id = {x._id}
-                        slot={'end'}
-                    />
-                </IonItem>
+            
+                    <IonItem key={i} onClick={()=>router.push(`/brands/${x.slug}`)}>
+                        <IonAvatar slot="start">
+                            <img src={x.logo} />
+                        </IonAvatar>
+                        <IonLabel>
+                            <h2>{x.name}</h2>
+                            <h3>Cannabis Brand</h3>
+                            {/* <p>I've got enough on my plate as it is, and I...</p> */}
+                        </IonLabel>
+                        <FavoriteButton 
+                            collection = 'brands'
+                            _id = {x._id}
+                            slot={'end'}
+                        />
+                    </IonItem>
+               
             )
             break;
 
         case 'strains':
             return (
-                <IonItem key={i}>
+                <IonItem key={i} onClick={()=>router.push(`/strains/${x.slug}`)}>
                     <IonAvatar slot="start">
                         <img src={x.picture} />
                     </IonAvatar>
@@ -188,7 +223,7 @@ const cards = (x, i, ScopedModel) => {
 
         case 'dispensaries':
             return (
-                <IonItem key={i}>
+                <IonItem key={i} onClick={()=>router.push(`/businesses/profile/${x.slug}`)}>
                     <IonAvatar slot="start">
                         <img src={x.logo} />
                     </IonAvatar>
@@ -208,34 +243,16 @@ const cards = (x, i, ScopedModel) => {
 
         case 'deals':
             return (
-                <IonItem key={i}>
+                <IonItem key={i} onClick={()=>x.retailers ? router.push(`/businesses/profile/${getNearest(x).dispensary}`) : ''}>
                     <IonAvatar slot="start">
                         <img src={'/assets/images/deal_stock_new.png'} />
                     </IonAvatar> 
                     <IonLabel>
                         <h2>{x.name}</h2>
-                        {x.retailers && x.retailers.length > 0 && x.retailers.map(x => turf.distance(
-                            {
-                                "type": "Feature",
-                                "properties": {},
-                                "geometry": {
-                                    "type": "Point",
-                                    "coordinates": [x.location.coordinates[0], x.location.coordinates[1] ]
-                                }
-                            },
-                            {
-                                "type": "Feature",
-                                "properties": {},
-                                "geometry": {
-                                    "type": "Point",
-                                    "coordinates": [JSON.parse(localStorage.getItem(MY_LOCATION)).longitude, JSON.parse(localStorage.getItem(MY_LOCATION)).latitude]
-
-                                }
-                            }, 
-                            { units: 'miles' }
-                        )).sort(function(a, b) {
-                              return a - b;
-                            })[0].toFixed(1)} miles away
+                        <small>
+                            
+                        {x.retailers && getNearest(x) && getNearest(x).distance && getNearest(x).distance.toFixed(2)} miles away
+                        </small>
                         {/* <p>I've got enough on my plate as it is, and I...</p> */}
                     </IonLabel>
                     <FavoriteButton 

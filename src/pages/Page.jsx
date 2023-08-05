@@ -4,17 +4,18 @@ import { home, car, map, informationCircle, search, location, locationOutline, s
 import CardsCarousel from '../components/Carousels/CardsCarousel'
 import './Page.css';
 import TopToolbar from '../components/Common/TopToolbar';
-import cookie from 'js-cookie'
 import { MY_LOCATION, MY_LOCATION_PLACE, MY_LOCATION_PLACE_FULLNAME } from '../helpers/constants';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TemporaryLocation } from '../components/Modals/TemporaryLocation';
 import useIsInViewport from 'use-is-in-viewport'
 import { home_sliders } from '../config/home_page';
 import DealsCarousel from '../components/Carousels/DealsCarousel';
 import BusinessesCarousel from '../components/Carousels/BusinessesCarousel';
-import { useDispatch } from 'react-redux';
-import { updateModalStatus } from '../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeMustNavigateTo, updateModalStatus } from '../store/actions';
 import Tabs from '../components/Tabs/Tabs';
+import ProductCard from '../components/Cards/Product';
+import StatesGrid from '../components/Sections/States';
 
 const Page = () => {
 
@@ -24,9 +25,128 @@ const Page = () => {
 		router.push(path)
     }
 
+    const { mustNavigateTo } = useSelector(state => state)
+
     const dispatch = useDispatch()
+	
+    useEffect(() => {
+        if(mustNavigateTo.length > 0){
+            dispatch(changeMustNavigateTo(''))
+            router.push(mustNavigateTo)
+        }
+    }, [mustNavigateTo])
 
     const [ showLocationModal, setShowLocationModal ] = useState(false)
+
+    const statesF = {
+        'Alabama':'AL',
+    'Alaska':'AK',
+    'Arizona':'AZ',
+    'Arkansas':'AR',
+    'California':'CA',
+    'Colorado':'CO',
+    'Connecticut':'CT',
+    'Delaware':'DE',
+    'Florida':'FL',
+    'Georgia':'GA',
+    'Hawaii':'HI',
+    'Idaho':'ID',
+    'Illinois':'IL',
+    'Indiana':'IN',
+    'Iowa':'IA',
+    'Kansas':'KS',
+    'Kentucky':'KY',
+    'Louisiana':'LA',
+    'Maine':'ME',
+    'Maryland':'MD',
+    'Massachusetts':'MA',
+    'Michigan':'MI',
+    'Minnesota':'MN',
+    'Mississippi':'MS',
+    'Missouri':'MO',
+    'Montana':'MT',
+    'Nebraska':'NE',
+    'Nevada':'NV',
+    'New Hampshire':'NH',
+    'New Jersey':'NJ',
+    'New Mexico':'NM',
+    'New York':'NY',
+    'North Carolina':'NC',
+    'North Dakota':'ND',
+    'Ohio':'OH',
+    'Oklahoma':'OK',
+    'Oregon':'OR',
+    'Pennsylvania':'PA',
+    'Rhode Island':'RI',
+    'South Carolina':'SC',
+    'South Dakota':'SD',
+    'Tennessee':'TN',
+    'Texas':'TX',
+    'Utah':'UT',
+    'Vermont':'VT',
+    'Virginia':'VA',
+    'Washington':'WA',
+    'West Virginia':'WV',
+    'Wisconsin':'WI',
+    'Wyoming':'WY',
+    'District of Columbia':'DC'
+    }
+    
+
+    const states = [
+'AL',	
+'AK',	
+'AZ',	
+'AR',	
+'CA',	
+'CO',	
+'CT',	
+'DE',	
+'FL',	
+'GA',	
+'HI',	
+'ID',	
+'IL',	
+'IN',	
+'IA',	
+'KS',	
+'KY',	
+'LA',	
+'ME',	
+'MD',	
+'MA',	
+'MI',	
+'MN',	
+'MS',	
+'MO',	
+'MT',	
+'NE',	
+'NV',
+'NH',	
+'NJ',	
+'NM',	
+'NY',	
+'NC',	
+'ND',	
+'OH',	
+'OK',
+'OR',	
+'PA',	
+'RI',	
+'SC',
+'SD',
+'TN',	
+'TX',	
+'UT',
+'VT',	
+'VA',	
+'WA',	
+'WV',	
+'WI',	
+'WY',	
+'WC',
+    ]
+
   
     return (
         
@@ -40,10 +160,10 @@ const Page = () => {
                     />
                 </IonToolbar>
             </IonHeader>
-            
+        
             <IonContent>
                 <section style={{
-                    backgroundImage: 'url(https://res.cloudinary.com/timj111/image/upload/v1633363545/states/lewfg8orxl2hy9rbe69n.jpg)',
+                    backgroundImage: `url(https://res.cloudinary.com/timj111/image/upload/f_auto,c_limit,q_75,w_${window.innerWidth*0.7}/v1633363545/states/State_${states.includes(localStorage.getItem('REGION') && localStorage.getItem('REGION').replaceAll('"', '')) ? localStorage.getItem('REGION') && localStorage.getItem('REGION').replaceAll('"', '') : statesF[localStorage.getItem('REGION').replaceAll('"', '')] ? statesF[localStorage.getItem('REGION').replaceAll('"', '')] : 'CA'}`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     backgroundPosition: '50% 30%',
@@ -81,6 +201,7 @@ const Page = () => {
                     </div>
                 </section>
                 <br/>
+         
                 {/* <CardsCarousel 
                     title={'Dispensaries near you'}
                 />
@@ -123,9 +244,15 @@ const Page = () => {
                         bigCard: false,
                     }}
                 />
+
+
+
                 <CardsCarousel 
                     {...home_sliders.lastestArticles}
-                    disableBorder={true}
+                />
+                
+                <StatesGrid 
+                    title='Find Dispensaries Across America'
                 />
                 
             </IonContent>

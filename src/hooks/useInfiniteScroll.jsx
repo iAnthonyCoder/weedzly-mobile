@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import cookie from 'js-cookie'
 import queryString from 'query-string'
 import { 
 	IonInfiniteScroll, 
@@ -98,12 +97,11 @@ const useInfiniteScroll = (props) => {
     const isFirstRun = useRef(true);
 
     useEffect(() => {
-   
         if(props.startWithUrlFilter){
-            // if (isFirstRun.current) {
-            //     isFirstRun.current = false;
-            //     return;
-            // }
+            if (isFirstRun.current) {
+                isFirstRun.current = false;
+                return;
+            }
             setItems([])
             getItems()
         } else {
@@ -133,6 +131,7 @@ const useInfiniteScroll = (props) => {
     )
 
     const filterer = (value, multi, valueToRemove) => {
+        console.log(value)
         if(value === null){
             setFilterString('')
         } else if (filterString.includes(value)){

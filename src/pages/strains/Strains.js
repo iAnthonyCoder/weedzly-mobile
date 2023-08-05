@@ -82,8 +82,8 @@ const Strains = () => {
             />
             
             <IonContent>
-                <section className='ion-padding-top'>
-                    <IonChip 
+                <section className='ion-padding-top' style={{width:'100%', display:'flex',overflowX: 'auto', whiteSpace: 'nowrap'}}>
+                    <div><IonChip 
                         outline={filterString.split(`&filterfield[]=${filtering_settings.strainsPage.static[0].field}&filtertype[]=${filtering_settings.strainsPage.static[0].type}`).length - 1 > 0 ? false : true}
 						color='primary' 
                         onClick={()=>setTypeModalOpened(true)}
@@ -92,8 +92,8 @@ const Strains = () => {
 						    Type {filterString.split(`&filterfield[]=${filtering_settings.strainsPage.static[0].field}&filtertype[]=${filtering_settings.strainsPage.static[0].type}`).length - 1 > 0 && ` (${filterString.split(`&filterfield[]=${filtering_settings.strainsPage.static[0].field}&filtertype[]=${filtering_settings.strainsPage.static[0].type}`).length - 1})`}
 						</IonLabel>	
                         <IonIcon icon={chevronDown} />
-					</IonChip>
-                    <IonChip 
+					</IonChip></div>
+                    <div><IonChip 
                         outline={filterString.split(`&filterfield[]=${filtering_settings.strainsPage.static[1].field}&filtertype[]=${filtering_settings.strainsPage.static[1].type}`).length - 1 > 0 ? false : true}
 						color='primary' 
                         onClick={()=>setEffectsModalOpened(true)}
@@ -102,8 +102,8 @@ const Strains = () => {
 						    Effects {filterString.split(`&filterfield[]=${filtering_settings.strainsPage.static[1].field}&filtertype[]=${filtering_settings.strainsPage.static[1].type}`).length - 1 > 0 && ` (${filterString.split(`&filterfield[]=${filtering_settings.strainsPage.static[1].field}&filtertype[]=${filtering_settings.strainsPage.static[1].type}`).length - 1})`}
 						</IonLabel>	
                         <IonIcon icon={chevronDown} />
-					</IonChip>
-                    <IonChip 
+					</IonChip></div>
+                    <div><IonChip 
                         outline={filterString.split(`&filterfield[]=${filtering_settings.strainsPage.static[2].field}&filtertype[]=${filtering_settings.strainsPage.static[2].type}`).length - 1 > 0 ? false : true}
 						color='primary' 
                         onClick={()=>setFlavorsModalOpened(true)}
@@ -112,7 +112,7 @@ const Strains = () => {
 						    Flavors {filterString.split(`&filterfield[]=${filtering_settings.strainsPage.static[2].field}&filtertype[]=${filtering_settings.strainsPage.static[2].type}`).length - 1 > 0 && ` (${filterString.split(`&filterfield[]=${filtering_settings.strainsPage.static[2].field}&filtertype[]=${filtering_settings.strainsPage.static[2].type}`).length - 1})`}
 						</IonLabel>	
                         <IonIcon icon={chevronDown} />
-					</IonChip>
+					</IonChip></div>
                 </section>
                 <section className='full-width' >
                     {/* <IonTitle className='ion-no-margin'>All Strains</IonTitle> */}

@@ -2,7 +2,6 @@ import { IonAvatar, IonBadge, IonButton, IonCard, IonCardTitle, IonChip, IonCont
 import React, { useEffect, useState } from 'react'
 import TopToolbar from '../../../../components/Common/TopToolbar'
 import { productService } from '../../../../services/product.service'
-import cookie from 'js-cookie'
 import queryString from 'query-string'
 import _ from 'lodash'
 import { addOutline, leaf, removeOutline, star } from 'ionicons/icons'
@@ -102,7 +101,7 @@ const BusinessProduct = (props) => {
         }
     }
 
-    
+   
 
     
 
@@ -265,7 +264,9 @@ const BusinessProduct = (props) => {
                                     {
                                         selectedVariant && item.variants.find(x => x._id === selectedVariant).isWPointsSalable && !user._id && (
                                             <div style={{ display:'flex', alignItems:'center', color:'white', marginLeft:'4px', marginRight:'4px', marginBottom:'16px',height:'48px', padding:'8px', borderRadius:'5px', backgroundColor:'rgb(108 52 120)'}}>
-                                                <strong style={{color:'#67abff'}} onClick={()=>router.push('/login') }>Login &nbsp;</strong> to check nugs balance
+                                                <strong style={{color:'#67abff'}} onClick={()=>{
+                        dispatch(updateModalStatus({login:true}))
+                    }}>Login &nbsp;</strong> to check nugs balance
                                             </div>
                                         )
                                     }

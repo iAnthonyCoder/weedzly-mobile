@@ -2,7 +2,6 @@ import { IonAvatar, IonCard, IonCardTitle, IonContent, IonHeader, IonIcon, IonIt
 import React, { useEffect, useState } from 'react'
 import TopToolbar from '../../../../components/Common/TopToolbar'
 import { productService } from '../../../../services/product.service'
-import cookie from 'js-cookie'
 import queryString from 'query-string'
 import _ from 'lodash'
 import { star } from 'ionicons/icons'
@@ -45,8 +44,25 @@ const BrandProduct = (props) => {
     useEffect(() => {
         getProduct()
     }, [])
-    
 
+
+    const [ initialHeight, setInitialHeight ] = useState(false)
+
+    const [ height, setHeight ] = useState(0)
+
+    useEffect(() => {
+        setTimeout(() => {
+            let box = document.getElementById('el');
+        if(box){
+            let width = box.offsetWidth;
+            let height = box.offsetHeight;
+           
+           setInitialHeight(height)
+        }
+        }, 1);
+    }, [item])
+    
+    
     return (
         <IonPage>
             <IonHeader>
@@ -112,6 +128,7 @@ const BrandProduct = (props) => {
                             </div>
                         ) : (
                             <div>
+                                <div id='el' style={{display:'flex', overflow:'hidden', flexDirection:'column', marginTop: height}}>
                                 <IonItem style={{alignItems: 'flex-start', marginBottom:'16px'}} lines={'none'}>
                                     <IonAvatar
                                         slot='start'
@@ -186,6 +203,7 @@ const BrandProduct = (props) => {
                                         </div> */}
                                     </div>
                                 </IonToolbar>
+                                </div>
                                 <IonToolbar style={{marginTop:'8px'}}>
                                     <IonSegment scrollable={true} value={selectedSegment}>
         	                            <IonSegmentButton onClick={()=>setSelectedSegment('info')} value="info">
@@ -204,7 +222,17 @@ const BrandProduct = (props) => {
                     }
                 </IonToolbar>
             </IonHeader>
-            <IonContent color='light' >
+            <IonContent color='light' scrollEvents={true}   onIonScroll={(e) => {
+                console.log(e.detail.scrollTop)
+                console.log(height)
+                console.log(initialHeight)
+                if(e.detail.scrollTop > initialHeight){
+                    setHeight((initialHeight*-1)+8)
+                } else {
+                    setHeight(e.detail.scrollTop*-1)
+                }
+
+            }}>
             {
                 actionsLoading ? (
                     <FullSpinner />

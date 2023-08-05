@@ -6,7 +6,6 @@ import sorting_settings from '../../../../config/sorting_settings'
 import useInfiniteScroll from '../../../../hooks/useInfiniteScroll'
 import { productService } from '../../../../services/product.service'
 import * as turf from "@turf/turf";
-import cookie from 'js-cookie'
 import { MY_LOCATION } from '../../../../helpers/constants'
 import CheckIfOpen from '../../../../helpers/checkIfOpen'
 import { Router } from 'workbox-routing'

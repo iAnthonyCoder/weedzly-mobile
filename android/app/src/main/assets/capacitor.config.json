@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "weedzly",
+	"appId": "com.weedzly.weedzly",
+	"appName": "Weedzly",
 	"webDir": "build",
 	"bundledWebRuntime": false
 }

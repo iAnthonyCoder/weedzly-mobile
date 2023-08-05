@@ -6,7 +6,8 @@ const baseUrl = `${api}${'states'}`;
 export const stateService = {
     findByUUID,
     findById,
-    findByAbr
+    findByAbr,
+    getAll
 };
 
 function findByUUID(UUID) {
@@ -21,4 +22,7 @@ function findById(id){
     return fetchWrapper.get(`${baseUrl}/byId/${id}`);
 }
 
+function getAll(query=''){
+    return fetchWrapper.get(`${baseUrl}${query}`);
+}
 

@@ -1,4 +1,4 @@
-import { IonCard, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonRouter } from '@ionic/react'
+import { IonButton, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRow, IonSegment, IonSegmentButton, IonText, IonTitle, useIonRouter } from '@ionic/react'
 import React from 'react'
 import TopToolbar from '../../components/Common/TopToolbar'
 import Tabs from '../../components/Tabs/Tabs'
@@ -51,9 +51,6 @@ export default function Products (props) {
                                 </div>
                             </IonCard>
                         </IonCol>
-                       
-                        
-                        
                         <IonCol size="6" size-md="4">
                             <IonCard onClick={()=>router.push('/products/list?filterfield[]=category&filtertype[]=eq&filtervalue[]=EDIBLES')}>
                                 <div>
@@ -93,6 +90,13 @@ export default function Products (props) {
                                     </IonText>
                                 </div>
                             </IonCard>
+                        </IonCol>
+                        <IonCol size="12" size-md="12">
+                            <section>
+                                <IonButton onClick={()=>router.push('/products/list')} color='light' expand='block'>
+                                    All products
+                                </IonButton>
+                            </section>
                         </IonCol>
                     </IonRow>
                 </IonGrid>

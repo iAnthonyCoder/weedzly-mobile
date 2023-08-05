@@ -7,17 +7,17 @@ import { static_img_url_creator } from '../../helpers/static_img_url_creator';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { useDebounce } from 'use-debounce'
 import queryString from 'query-string'
-import cookie from 'js-cookie';
 import { mapboxService } from '../../services/mapbox.service';
 import * as turf from "@turf/turf";
 import _ from 'lodash'
-import { BACKGROUND_STATE, MY_LOCATION, MY_LOCATION_PLACE, MY_LOCATION_PLACE_FULLNAME, MY_LOCATION_PLACE_NAME } from '../../helpers/constants';
+import { BACKGROUND_STATE, BRANDS_IN_SUBZONE, DELIVERY_IN_SUBZONE, DISPENSARY_IN_SUBZONE, MY_LOCATION, MY_LOCATION_PLACE, MY_LOCATION_PLACE_FULLNAME, MY_LOCATION_PLACE_NAME } from '../../helpers/constants';
 import { locateOutline } from 'ionicons/icons';
 import { stateService } from '../../services/state.service';
 import { cityService } from '../../services/city.service';
 import FullSpinner from '../Common/FullSpinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateModalStatus } from '../../store/actions';
+import { sponsor_subzoneService } from '../../services/sponsor_subzone.service';
 declare type Units = "miles"
 
 interface LocationProps {
@@ -155,26 +155,63 @@ export const TemporaryLocation: React.FC<LocationProps> = (props) => {
         }
     }
 
+
+    const getBusinessSubzone = async () => {
+
+		try {
+			let loc = JSON.parse(localStorage.getItem(MY_LOCATION_PLACE) || '')
+			let location = JSON.parse(localStorage.getItem(MY_LOCATION) || '')
+			let {
+				longitude,
+				latitude
+			} = location
+			await localStorage.removeItem(BRANDS_IN_SUBZONE)
+			await localStorage.removeItem(DISPENSARY_IN_SUBZONE)
+			await localStorage.removeItem(DELIVERY_IN_SUBZONE)
+			let sponsor_subzone = await sponsor_subzoneService.findByLocation(longitude, latitude)
+			if(Object.keys(sponsor_subzone).length > 0){
+				if(sponsor_subzone.brand && sponsor_subzone.brand.length > 0){
+					await localStorage.setItem(BRANDS_IN_SUBZONE, JSON.stringify(sponsor_subzone.brand));
+				} 
+				if(sponsor_subzone.dispensary && Object.keys(sponsor_subzone.dispensary).length > 0){
+					await localStorage.setItem(DISPENSARY_IN_SUBZONE, JSON.stringify(sponsor_subzone.dispensary));
+				} 
+				if(sponsor_subzone.delivery && Object.keys(sponsor_subzone.delivery).length > 0){
+					await localStorage.setItem(DELIVERY_IN_SUBZONE, JSON.stringify(sponsor_subzone.delivery));
+				} 
+			
+				if(sponsor_subzone.state && Object.keys(sponsor_subzone.state).length > 0){
+					await localStorage.setItem(MY_LOCATION_PLACE, JSON.stringify({...loc, state:sponsor_subzone.state}))
+					await localStorage.setItem('IS_CANNABIS_LEGAL', JSON.stringify(sponsor_subzone.state.isCannabisLegal))
+					await localStorage.setItem('IS_DELIVERY_AVAILABLE', JSON.stringify(sponsor_subzone.state.isDeliveryAvailable))
+				}
+			}
+			await localStorage.setItem('SPONSORED_SCANNED', moment().toString());
+			setLoading(false)
+			window.location.reload()
+			return true
+
+		} catch (er) {
+			window.location.reload()
+			return false
+
+		}
+
+	}
+    
+
     const applyLocation = async () => {
         setActionsLoading(true)
         return mapboxService.reverseGeocoding(selectedPlace.center[0], selectedPlace.center[1], 'types=address%2Cplace%2Cregion%2Cpostcode')
             .then(async res => {
-        let cityInfo = await getCityId(res.features.find( (x: any) => x.id.includes('place')).id)
-        let stateInfo = cityInfo && cityInfo.state && cityInfo.state._id ? cityInfo.state : await getStateId(res.features.find( (x: any) => x.id.includes('region')).id) 
-        await localStorage.setItem(BACKGROUND_STATE, stateInfo.background, { path: '/' })
+
         let myLocationPlace = {
             place: res.features.find( (x: any) => x.id.includes('place')).text,
             region: res.features.find( (x: any) => x.id.includes('region')).text,
             center: res.features.find( (x: any) => x.id.includes('place')).center,
-            stateId: stateInfo._id,
-            cityId: cityInfo._id,
-            state:{
-                _id: stateInfo._id,
-                isDeliveryAvailable: stateInfo.isDeliveryAvailable,
-                isCannabisLegal: stateInfo.isCannabisLegal
-            }
         }
         let state = res.features.find( (x: any) => x.id.includes('region')).text
+        await localStorage.setItem('REGION', state);
         let zip = res.features.find( (x: any) => x.id.includes('postcode'))
         let city = res.features.find( (x: any) => x.id.includes('place'))
         let secondText = res.features.find( (x: any) => x.id.includes('region')).context[0].short_code
@@ -195,11 +232,7 @@ export const TemporaryLocation: React.FC<LocationProps> = (props) => {
             type: 'AUTO'
         }), { path: '/' })
         await localStorage.setItem(MY_LOCATION_PLACE, JSON.stringify(myLocationPlace), { path: '/' });
-        if(myLocationPlace.stateId){
-            
-            let state = await stateService.findById(myLocationPlace.stateId)
-            await localStorage.setItem(BACKGROUND_STATE, state.background, { path: '/' })
-        }    
+        await getBusinessSubzone() 
         window.location.reload()
     })  
     }

@@ -6,7 +6,7 @@ import './SignupModal.css'
 import { checkmarkDoneCircle } from 'ionicons/icons';
 import { accountService } from '../../services';
 import { useDispatch } from 'react-redux';
-import { userLogin } from '../../store/actions';
+import { updateModalStatus, userLogin } from '../../store/actions';
 
 const SignupModal = (props) => {
 
@@ -255,7 +255,10 @@ const SignupModal = (props) => {
                             (formik.isSubmitting || checkingNickname) ? <IonSpinner name="crescent" /> : logged ? <IonIcon icon={checkmarkDoneCircle} /> : 'Sign up'
                         }
                     </IonButton>
-                    <IonRouterLink href='/login'><center>Already have an account? Sign in now!</center></IonRouterLink>
+                    <IonRouterLink onClick={()=>{
+                        dispatch(updateModalStatus({login:true}))
+                        dispatch(updateModalStatus({signup:false}))
+                    }}><center>Already have an account? Sign in now!</center></IonRouterLink>
                 </form>
                
             </IonContent>

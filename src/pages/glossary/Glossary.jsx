@@ -2,6 +2,7 @@ import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonHe
 import React, { useEffect, useState } from 'react'
 import TermCard from '../../components/Cards/Term';
 import TopToolbar from '../../components/Common/TopToolbar'
+import Tabs from '../../components/Tabs/Tabs';
 import { getDayAndTime } from '../../helpers/time';
 import { termService } from '../../services/term.service';
 
@@ -139,6 +140,7 @@ const Glossary = () => {
                 </IonContent>
                 )
             }
+            <Tabs />
         </IonPage>
     )
 }

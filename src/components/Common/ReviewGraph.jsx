@@ -1,7 +1,9 @@
 import { IonButton, IonCard, IonCardHeader, IonCardTitle, IonIcon, IonSpinner, IonText } from '@ionic/react'
 import { star } from 'ionicons/icons';
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import StarRatings from 'react-star-ratings';
+import { updateModalStatus } from '../../store/actions';
 
 const ReviewGraph = (props) => {
 
@@ -17,6 +19,10 @@ const ReviewGraph = (props) => {
         </div>
     )
 
+
+    const user = useSelector(state => state.user)
+
+    const dispatch = useDispatch()
 
     return (
         <IonCard>
@@ -56,7 +62,13 @@ const ReviewGraph = (props) => {
                             <IonText>5</IonText> */}
                         </div>
                         <hr/>
-                        <IonButton onClick={()=>props.setShowReviewModal(true)} color='primary'>Write a review</IonButton>
+                        <IonButton onClick={()=>{
+                            (user._id) ? (
+                                props.setShowReviewModal(true)
+                            ) : ( 
+                                dispatch(updateModalStatus({login:true}))
+                            )
+                        }} color='primary'>Write a review</IonButton>
                     </IonCardHeader>
                 )
             }
